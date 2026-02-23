@@ -47,7 +47,12 @@ This lab assumes you have:
 1. In Oracle Database Actions (SQL Web from AJD console):
    - In the OCI Console, open your AJD database.
    - Click **Database actions** and launch **SQL** (SQL Web).
+   ![Open SQL Web](./images/sqldev.png)
+   - By default you may be logged in as admin, go ahead and sign out.
+   ![Sign Out of Admin](./images/adminLogout.png)
    - Log in to AJD as database user, e.g. **MONGO_USER**.
+   ![Sign Out of Admin](./images/sign-in.png)
+   
    - Run:
 
      ```sql
