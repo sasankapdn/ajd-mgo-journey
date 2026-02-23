@@ -69,6 +69,9 @@ To use Cline effectively, you'll need to set up your preferred Large Language Mo
 - **Choose an LLM Provider:** Popular options include OpenAI (e.g., GPT models), Anthropic (Claude), Google (Gemini), or open-source via Hugging Face. Select based on your needs for cost, performance, and features.  
 - **Obtain API Keys:** Sign up for an account with your chosen provider (e.g., at platform.openai.com for OpenAI). Generate an API key from their dashboard – keep it secure and never share it.  
 - **Configure in VS Code:** In the extension settings, find the LLM configuration section. Input your API key, select the model (e.g., "gpt-4o" or "claude-3.5-sonnet"), and test the connection. If using a proxy or custom endpoint, configure those as well.  
+- **Note:** You can enable the ChatGPT model directly in the browser if prompted, preventing you from needing keys.
+![ChatGPT Login](./images/chatGptlogin.png)
+![ChatGPT Success](./images/chatgptsuccess.png)
 - **Helpful Tips:** Start with free tiers if available to test; monitor usage to avoid unexpected costs; refer to the provider's documentation for model-specific setup. If issues arise, check the extension's logs or community forums for troubleshooting. For advanced setups, consider editing the extension's config.json file directly.
 
 3. Save the settings and restart VS Code if prompted.
