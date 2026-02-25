@@ -57,7 +57,7 @@ npm init -y
 </copy>
 ```
 
-> **Cline prompt (optional):**
+> **Cline prompt:**
 > “I’m building a Node.js + Express + MongoDB CRUD To-Do app that will connect to Oracle AJD via the MongoDB API. Create a step-by-step plan and confirm what files I should create.”
 
 ## Task 2: Install Dependencies
@@ -76,7 +76,7 @@ npm install express mongodb
 
 Create a file named `server.js` with the following content:
 
-> **Cline prompt (optional):**
+> **Cline prompt:**
 > “Generate an Express server with CRUD endpoints for a `todos_source` collection using the Node MongoDB driver. Read `SOURCE_MONGO_API_URL` and `COLLECTION_NAME` from environment variables.”
 
 ```javascript
