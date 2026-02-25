@@ -179,7 +179,8 @@ mkdir public
 </copy>
 ```
 
-2. Inside `public`, create `index.html` with the following content:
+2. Here is and example of Cline output that is consistent with the lab. If using cline would have already generated this. Follow these instructions if you are using sample code generations:
+Inside `public`, create `index.html` with the following content:
 
 ```html
 <copy>
