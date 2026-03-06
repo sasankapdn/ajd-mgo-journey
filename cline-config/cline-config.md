@@ -34,13 +34,14 @@ This lab will show you how to following requirements for this workshop:
 * Install Visual Studio SQL Developer Extension
 * [Windows Only] Install Git/GitBash 
 * Install NodeJS
+* Test the Installation
 
 ---
 ## Task 1: Install Visual Studio Code installed on your machine 
 
 1. You can download Visual Studio Code from this link (download: https://code.visualstudio.com/download) 
 
-Note:  if you need further assistance regarding your VS Code setup based on your operating system you follow instructions below, if not you can skip this step.
+Note:  if you need further assistance regarding your VS Code setup based on your operating system you can follow instructions below, if not you can skip this step.
 
 ### Install VS Code on macOS
 
@@ -131,12 +132,43 @@ Note: For Getting started with your GitHub account you follow instructions here.
 
 ![Continue configuration](./images/GithubCopilotSelect.png)
 
-3. Select Language Model as 
+3. Select  copilot - copilot-fast model from Language Model drop down list.
 
 ![Continue configuration](./images/ModelSelection.png)
 
+## Task 5: Install Visual Studio SQL Developer Extension
 
-## Task 3: Test the Installation
+
+1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
+
+2. Search for 'SQL Developer' in the searchbox.
+
+3. Click Install on the chosen extension.
+
+![Continue configuration](./images/SQLDeveloperExt.png)
+
+## Task 6: [Windows Only] Install Git/GitBash 
+
+1. Click Git icon and click download Git for Windows
+
+![Continue configuration](./images/GitBashInstall.png)
+
+2. Once you clicked download Git for Windows button, you can see a pop-up window to open the external website where you have redirected to Git Download and Install page.
+
+![Continue configuration](./images/OpenGitWeb.png)
+
+### Task 6:  NodeJS Installation
+
+1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side.
+
+2. Search for 'NodeJS' in the searchbox.
+
+3. Click Install on the chosen extension.
+
+![Continue configuration](./images/NodeJS.png)
+
+
+## Task 7: Test the Installation
 
 1. Open a code file in VS Code.
 
@@ -150,15 +182,22 @@ Note: For Getting started with your GitHub account you follow instructions here.
       }
       module.exports = { add };
    ```
+![Continue configuration](./images/AddFile.png)
 
 4. In VS Code, highlight the code and either:
    - Right-click and choose **Add to Cline**, or
    - Copy/paste it into the Cline chat panel.
 
+![Continue configuration](./images/AddToCline.png)
+
 5. Ask Cline:
    - "Explain what this code does and suggest one improvement."
 
+![Continue configuration](./images/RunTestCode.png)
+
 6. Verify that Cline responds correctly using your configured LLM.
+
+![Continue configuration](./images/TestCodeReview.png)
 
 ---
 
