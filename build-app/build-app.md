@@ -39,8 +39,17 @@ npm -v
 ---
 
 ## Task 1: Create Project Directory
+1. Open VS Code Terminal and Check Node Version to check it is properly installed.
 
-1. Create a new directory for your app:
+```bash
+<copy>
+node -v
+</copy>
+```
+
+![node version](./images/nodeversion.png)
+
+2. Create a new directory for your app:
 
 ```bash
 <copy>
@@ -49,14 +58,14 @@ cd todo-app
 </copy>
 ```
 
-2. Initialize NPM:
+3. Initialize NPM:
 
 ```bash
 <copy>
 npm init -y
 </copy>
 ```
-
+![node version](./images/npninit.png)
 > **Cline prompt:**
 > “I’m building a Node.js + Express + MongoDB CRUD To-Do app that will connect to Oracle AJD via the MongoDB API. Create a step-by-step plan and confirm what files I should create.”
 
@@ -69,6 +78,7 @@ Install Express and MongoDB driver:
 npm install express mongodb
 </copy>
 ```
+![node version](./images/mongodbinstall.png)
 
 *Note* To install node on your system, the instructions can be found on the [NodeJS Website](https://nodejs.org/en/download)
 
@@ -154,19 +164,29 @@ app.listen(PORT, async () => {
 ## Task 4: Configure Environment
 
 Set the env variable **SOURCE\_MONGO\_API\_URL**:
-
+GitBash/Linux/MacOS
 ```bash
 <copy>
 export SOURCE_MONGO_API_URL='your-connection-string'
 </copy>
 ```
+![node version](./images/ExportMacLinux.png)
 
 Windows (PowerShell):
 
 ```powershell
 $env:SOURCE_MONGO_API_URL = "your-connection-string"
 ```
+![node version](./images/WindowsPS.png)
 
+Windows GitBash
+```bash
+<copy>
+export SOURCE_MONGO_API_URL='your-connection-string'
+</copy>
+```
+
+![node version](./images/GitBashExport.png)
 **Note** Make sure to only use single quotes ' ' around the connection string.
 
 ## Task 5: Create Frontend UI
@@ -265,7 +285,11 @@ mkdir public
 
 ## Task 6: Run and Test the Application
 
-1. Start the server:
+1. Go to the application directory by entering cd.. to the NodeJS directory and Start the server:
+
+``` cd ..  ``
+
+![node version](./images/cd.png)
 
 ```bash
 <copy>
@@ -273,7 +297,9 @@ node server.js
 </copy>
 ```
 
-2. Open `http://localhost:3000` in your browser.
+2. Open `http://localhost:3000` in your browser add new to-do items and click Add Button.
+
+![To-Do List](./images/todocrud.png)
 
 ![To-Do List](./images/todo-list.png)
 

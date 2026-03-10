@@ -159,13 +159,40 @@ Note: For Getting started with your GitHub account you follow instructions here.
 
 ### Task 6:  NodeJS Installation
 
-1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side.
+1. Go to Visual Studio Code and click Terminal and run following commands based on your operating system or you can download directly from NodeJS Official Website from this link (download: https://nodejs.org/en/download)
 
-2. Search for 'NodeJS' in the searchbox.
+![Continue configuration](./images/Terminal.png)
 
-3. Click Install on the chosen extension.
+### Install NodeJS on macOS/Linux
 
-![Continue configuration](./images/NodeJS.png)
+* Download and install nvm:
+```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash```
+* in lieu of restarting the shell
+``` \. "$HOME/.nvm/nvm.sh" ```
+* Download and install Node.js:
+``` nvm install 24 ```
+* Verify the Node.js version:
+``` node -v ```
+* Verify npm version:
+``` npm -v ``` 
+
+### Install NodeJS on Windows
+
+* Download and install Chocolatey:
+``` powershell -c "irm https://community.chocolatey.org/install.ps1|iex" ```
+
+* Download and install Node.js:
+``` choco install nodejs --version="24.14.0" ```
+
+* Verify the Node.js version:
+``` node -v ```
+
+* Verify npm version:
+``` npm -v ```
+
+2. Install MongoDB Cli
+
+``` npm install mongodb ```
 
 
 ## Task 7: Test the Installation

@@ -45,7 +45,9 @@ This lab assumes you have:
 ## Task 2: Review Schema and Collections
 
 1. In Oracle Database Actions (SQL Web from AJD console):
-   - In the OCI Console, open your AJD database.
+   - In the OCI Console and search for your database name, open your AJD database.
+   ![Open SQL Web](./images/Navigate.png)
+
    - Click **Database actions** and launch **SQL** (SQL Web).
    ![Open SQL Web](./images/sqldev.png)
    - By default you may be logged in as admin, go ahead and sign out.
@@ -68,11 +70,15 @@ This lab assumes you have:
    **Why does `todos_source` show up in SQL?**
    When you use the MongoDB API against AJD, documents are stored as JSON and can be exposed through relational views/tables in Database Actions. This lets you query JSON using SQL while still using MongoDB drivers in your application.
 
+Here is how datatabse table created from the code.
+
+   ![AJD Tasks](./images/todoDB.png)
+
 2. Explore other tables if needed.
 
 ---
 
-## Task 3: Analyze and Plan Migration
+<!-- ## Task 3: Analyze and Plan Migration
 
 1. Confirm you have source data and understand its shape:
    - Count documents
@@ -80,7 +86,9 @@ This lab assumes you have:
 
 2. Plan: For this simple app, map 1:1 to a new 'todos_target' collection. No transformations are required.
 
-With your source data prepared and analyzed, you're ready for Lab 5 to build the migration CLI and perform the migration.
+With your source data prepared and analyzed, you're ready for Lab 5 to build the migration CLI and perform the migration. -->
+
+You source system for the migration example is not ready, and proceed to the next lab.
 
 ## Troubleshooting
 
