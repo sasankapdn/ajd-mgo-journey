@@ -178,21 +178,7 @@ Note: For Getting started with your GitHub account you follow instructions here.
 
 ### Install NodeJS on Windows
 
-* Download and install Chocolatey:
-``` powershell -c "irm https://community.chocolatey.org/install.ps1|iex" ```
-
-* Download and install Node.js:
-``` choco install nodejs --version="24.14.0" ```
-
-* Verify the Node.js version:
-``` node -v ```
-
-* Verify npm version:
-``` npm -v ```
-
-2. Install MongoDB Cli
-
-``` npm install mongodb ```
+* Download Windows Installer (.msi) from NodeJS Official Website from this link (download: https://nodejs.org/en/download) and install it.
 
 
 ## Task 7: Test the Installation

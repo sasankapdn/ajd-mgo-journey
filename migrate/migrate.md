@@ -35,8 +35,15 @@ This lab assumes you have:
 1. Follow Tasks 1-3 in Lab 2: Provision and Connect to AJD to provision a new AJD instance for the target (e.g., name it "TargetAJD"). Create a separate user (recommended: **MONGO_USER_TARGET**) and enable the MongoDB API.
 
    **Note:** This keeps source and target separate to demonstrate the migration architecture clearly. Use your existing MongoDB or the Source-AJD from Lab 2 as the source.
+TargetAJD Autonomouse AI Database after following instruction in Lab 2 Task 1.
+   ![Migration CLI](./images/targetajd.png)
+MONGO_USER_TARGET user after following instruction in Lab 2 Task 2.
+   ![Migration CLI](./images/mongousertarget.png)
 
-2. Ensure you have the source connection string ready (from Lab 2 as `$SOURCE_MONGO_API_URL`) and provision a new one for the target as `$TARGET_MONGO_API_URL`.
+
+2. Ensure you have the source connection string ready (from Lab 2 as `$SOURCE_MONGO_API_URL`) and provision a new one for the target as `$TARGET_MONGO_API_URL`. Follow Lab 2 Task 4 instruction to copy source and target MongoDB API URLs.
+
+   ![Migration CLI](./images/mongoAPI.png)
 
 3. Export both environment variables and verify they are set:
 
@@ -55,8 +62,43 @@ This lab assumes you have:
 ---
 
 ## Task 2: Build the Migration CLI
+1. From VS Code, open Cline Extension again.
 
-1. In a new directory (e.g., `migration-cli`), initialize the project:
+ ![Migration CLI](./images/Cline.png)
+
+2. Copy below text for the Cline Prompt.
+
+```bash
+<copy>
+Create a new directory named 'migration-cli' and initialize a Node.js project. Install 'mongodb', 'commander', and 'cli-progress'. Then, create a file named 'migrate.js' that implements a migration CLI.
+The CLI must:
+Use 'commander' to accept --src, --tgt, --source-collection, and --target-collection arguments.
+Connect to both MongoDB URIs.
+To ensure it is safe to re-run, clear the target collection using 'deleteMany({})' before starting.
+Use 'cli-progress' to show a progress bar while migrating documents 1:1 from source to target.
+Use a cursor to handle streaming for efficiency.
+Include error handling for connection issues and ensure clients are closed in a 'finally' block.
+Ensure the code is compatible with Node.js v24
+</copy>
+```
+
+3. Paste it in Cline Prompt and Click Execute Button highlighted below.
+
+![Migration CLI](./images/ClinePrompt.png)
+
+4. You can see Pending Item and Cline wants to execute this command. Click Run Command to execute it.
+
+![Migration CLI](./images/RunCommand.png)
+
+5. After succefully ran above command, Cline wants to create a new file. Click Save Button to create migrate.js file.
+
+![Migration CLI](./images/SaveFile.png)
+
+6. You can confirm your Task has been completed and migrate.js has been created.
+
+![Migration CLI](./images/Confirm.png)
+
+<!-- 1. In a new directory (e.g., `migration-cli`), initialize the project:
    ```bash
    <copy>
    mkdir migration-cli
@@ -143,7 +185,7 @@ This lab assumes you have:
    This script supports separate source and target URIs.
 
 ---
-
+-->
 ## Task 3: Run the Migration
 
 When running the migration CLI, users reusing the AJD instance from 
@@ -163,7 +205,7 @@ When running the migration CLI, users reusing the AJD instance from
 ![Migration CLI](./images/mongo-cli-migrate.png)
 
 ---
-
+<!--
 ## Task 4: Handle Transformations (Optional)
 
 If needed, modify the script in Task 1 (e.g., in the while loop, adjust `doc` before inserting). For this workshop, assume a simple 1:1 migration. Cline can assist with custom transformations.
@@ -178,7 +220,7 @@ If needed, modify the script in Task 1 (e.g., in the while loop, adjust `doc` be
 - **Unique Constraint Violations (ORA-00001):** If you encounter errors about unique constraints (e.g., duplicate _id), clear the target collection before migration by adding `await tgtCol.deleteMany({});` before the count and migration loop in migrate.js.
 - **Large Datasets:** The cursor handles streaming for efficiency.
 - **Errors:** Check connections; add logging if needed for debugging.
-
+-->
 You are now ready for Lab 6 to validate and explore.
 
 ---
