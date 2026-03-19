@@ -6,10 +6,6 @@ In this lab, you'll provision an Oracle Autonomous JSON Database (AJD) instance 
 
 > **Estimated Time:** 15 minutes
 
-**Note:** This lab is required unless you already have an Autonomous JSON Database (AJD) with the MongoDB API enabled. If you already have one, you can reuse it and skip provisioning.
-
-**Note:** Cline can help automate provisioning scripts or troubleshoot connection issues—let me know if you need assistance!
-
 ---
 
 ### Objectives
@@ -25,13 +21,16 @@ In this lab, you will:
 
 This lab assumes you have:
 - Completed Lab 1 
-- An active Oracle Cloud account with permissions to create databases
+- An active Oracle Cloud account with permissions to create AI databases
 
 ---
 
 ## Task 1: Provision AJD Instance
 
-1. Log in to the Oracle Cloud Console and Click Navigation Menu.
+1. Navigate to [Oracle Cloud Sign In](https://www.oracle.com/cloud/sign-in.html?redirect_uri=https%3A%2F%2Fcloud.oracle.com%2F) and log in.
+
+
+2. Inside the Oracle Cloud Console and Click Navigation Menu.
 
 ![Navingation Memu](./images/oci-hamburger.png)
 
@@ -44,10 +43,8 @@ This lab assumes you have:
 ![Create Autonomous Database button](./images/AIDatabaseCreate.png)
 
 4. Rename Display name as **ajd-mongo-todo** 
-```bash
-<copy>
+```
 ajd-mongo-todo 
-</copy>
 ```
 Rename Database name as **ajdmongotodo**
 ```bash
