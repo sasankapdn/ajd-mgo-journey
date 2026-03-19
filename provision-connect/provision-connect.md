@@ -124,7 +124,7 @@ This lab assumes you have:
 
    ![Database Users](./images/VSDBConnView.png)
 
-## Task 4: Enable MongoDB API
+## Task 4: Enable MongoDB API & Formatting the Connect String
 
 1. In the AI JSON Database details page, go to **Tool Configuration**.
 
@@ -135,62 +135,48 @@ This lab assumes you have:
 
    ![Enable Access](./images/MongoDBStatus.png)
 
+3. Copy the Mongo Connection String from the console. 
 
-### Formatting the Connection String 
+   ![Mongo Connection String](./images/mongoconnectstring.png)
 
-1. Copy the connection string from the OCI Console and paste it into a text editor.
-2. Replace placeholders:
-   - Replace `<user>` with your database username (for example, `mongo_user`).
-   - Replace `<hostname>` with the hostname shown in the console.
-   - Replace `<password>` with your password, URL-encoded.
+4. Open a new file in VS Code and Paste the connect string into the file.
 
-> **Tip (Cline prompt):**
-> "Given username `mongo_user`, password `pass@word#1`, and hostname `<paste-hostname>`, URL-encode the password and output a final working MongoDB connection string. Output only the final string."
+   ![Mongo Connection String pasted](./images/connectstring.png)
 
-When setting env variable
+5. Begin to format the string by replacing **[user]** with **mongo_user**.
 
-```bash
-I need to URL encode the special characters in the provided password and then replace the placeholders in the MongoDB connection string with the username and encoded password. Let's break this down step-by-step.
-First, I have the username "mongo_user" and the password "pass@word#1". The special characters in the password (@ and #) need to be URL encoded. I know that @ becomes %40 and # becomes %23 in URL encoding. So, the encoded password should be "pass%40word%231".
-Next, I need to insert the username and encoded password into the connection string where it shows [user.password@] and also replace [user] in the database name part of the string. The connection string is: mongodb://[user:password@]IJEGQEYUI1CWVRQ-
-AJDMONGOTODO.adb.us-ashburn-1.oraclecloudapps.com:27017/[user]? authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=fals
-e&loadBalanced=true
-I will replace [user.password@] with "mongo_user:pass%40word%231@" and [user] with "mongo_user". This should give me the final connection string.
-Since the task is to output the result to the Cline window, I don't need to write to a file or execute a command. I can directly present the result using the attempt_completion tool.
-Let me confirm the encoded password and the replacements:
-Username: mongo_user
-• Password: pass@word#1
-• Encoded Password: pass%40word%231
-Replace [user:password@] with mongo_user:pass%40word%231@ Replace [user] with mongo_user
-The final connection string should be:
-mongodb://mongo_user:pass%40word%231@IJEGQEYUI1CWVRQ-
-AJDMONGOTODO.adb.us-ashburn-
-1.oraclecloudapps.com:27017/mongo_user?
-authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=fals
-e&loadBalanced=true
+   ![Mongo replace user](./images/userformat.png)
+
+   End result should look like:
+   ![Mongo replace user](./images/userformatcorrect.png)
+
+6. Next  replace **[user** with the name **mongo_user**.
+
+   ![Mongo replace user 2](./images/userreplace2.png)
+
+7. Next we need to first check to see if your mongo_user password contains any URI reserved characters. To do this open the following website [w3School](https://www.w3schools.com/tags/ref_urlencode.ASP) and go to the try it yourself section enter your password and press **Submit**. 
+   ![URI Check](./images/urltest.png)
+
+   The page will convert any special characters for you. 
+   ![URI Check](./images/fixeduri.png)
+
+   Copy the text generated to leverage in the next step. In this example you would copy the text.
+   ```
+   P%40ssword%21
+   ```
+
+8. Replace the text **password@]** with your URI encoded password + an @ symbol at the end. 
+   ![Password Replace](./images/passwordreplace.png)
+
+   The end result should look like:
+   ![Password Fix](./images/pwd_fix.png)
+
+9. This is an example completed url. 
 ```
-
-*  If human steps and images you  will need to copy the connection string. 
-Then ask them to past in notepad. Then explicitly show them what to paste in, you have defined the user as mongo_user, yet your instructions do not paste that into string you reference as <user>. Second your syntax showing the connection string format in current state is missing the machine name.  This will lead to issues for newer users later in the lab if this is not very clear and explicit. 
-
-* Example: Copy from the console the connect string and paste into notepad. 
-
-![Cline Access](./images/ClineConvertAPI.png)
-
-Replace placeholders with your details. URL-encode special characters in the password, e.g., '@' as %40, '#' as %23, '/' as %2F, and ':' as %3A. For example, if your password is 'pass@word#1', encode it as 'pass%40word%231'. Always use single quotes around the full string when exporting as an environment variable to avoid shell interpretation.
-
-The connection string format is:
-```bash
-mongodb://<user>:<password>@<hostname>:27017/<user>?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
+mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
 ```
 
 You are now ready for Lab 3 to build the To-Do app.
-
-## Troubleshooting
-
-- **Connection Errors:** If you encounter errors like ECONNRESET during TLS handshake, ensure your IP is added to the ACL and you're not on a VPN that interferes with external connections. Test connectivity with `openssl s_client -connect <hostname>:27017 -quiet`.
-
-- **Connection String:** Double-check URL-encoding (e.g., '@' as %40) and use single quotes when setting environment variables.
 
 ---
 
