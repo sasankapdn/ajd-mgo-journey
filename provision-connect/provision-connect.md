@@ -24,7 +24,7 @@ In this lab, you will:
 ### Prerequisites
 
 This lab assumes you have:
-- Completed Lab 1 (if chosen)
+- Completed Lab 1 
 - An active Oracle Cloud account with permissions to create databases
 
 ---

@@ -27,7 +27,7 @@ In this lab, you will:
 ### Requirements
 
 This lab will show you how to following requirements for this workshop:
-* Visual Studio Code installed on your machine (download: https://code.visualstudio.com/download)
+* Install Visual Studio Code on your machine 
 * Create/Login Github 
 * Install Visual Studio Cline Extensions - Cline and Github Copilot
 * Configure Cline Github Copilot Free Credits Connection
@@ -39,9 +39,7 @@ This lab will show you how to following requirements for this workshop:
 ---
 ## Task 1: Install Visual Studio Code installed on your machine 
 
-1. You can download Visual Studio Code from this link (download: https://code.visualstudio.com/download) 
-
-Note:  if you need further assistance regarding your VS Code setup based on your operating system you can follow instructions below, if not you can skip this step.
+1. Download and install Visual Studio Code from (download: https://code.visualstudio.com/download) Specific instructions based on your operating system can be found below.
 
 ### Install VS Code on macOS
 
@@ -72,9 +70,7 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 ## Task 2: Create/Login Github 
 
-1. To sign up for an account, navigate to https://github.com/ and follow the prompts.
-
-Note: For Getting started with your GitHub account you follow instructions here. (https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account)
+1. If you have a github account already you can proceed to the next step. If not please create a github account by following the instructions at this link [Sign up for GitHub](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home).
 
 ## Task 3: Install VS Code Extension: Cline
 
@@ -96,58 +92,66 @@ Note: For Getting started with your GitHub account you follow instructions here.
 
 2. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 
+   ![Github Extension Icon](./images/githubextensions.png)
+
 3. Search for 'GitHub Copilot' in the searchbox.
 
 4. Click Install on the chosen extension.
 
-![Install Extension](./images/GithubCopilotExt.png)  <!-- Placeholder; replace with actual image if available -->
+   ![Install Extension](./images/GithubCopilotExt.png) 
+
+5. When prompted select that you trust the publisher.
+
+   ![Trust Prompt for Extension](./images/github_extension_trust.png)
+
+6. When the install completes you should see the Cline icon appear in VS Code.
+   ![Cline Icon](./images/clineicon.png)
 
 
-
-## Task 4: Configure Cline Github Copilot Free Credits Connection
+## Task 5: Configure Cline Github Copilot Free Credits Connection
 
 1. Open the Cline view:
-   - Click the **Cline** icon in the VS Code Activity Bar (left side), or
-   - Open the command palette (`Ctrl+Shift+P` on Windows/Linux or `Cmd+Shift+P` on macOS) and search for **Cline: Focus on View**.
+   - Click the **Cline** icon in the VS Code Activity Bar (left side)
+   ![Cline Icon](./images/clineicon.png)
+   - Or open the command palette (`Ctrl+Shift+P` on Windows/Linux or `Cmd+Shift+P` on macOS) and search for **Cline: Focus on View** then press enter.
 
 ![Focus on View](./images/focus-on-view.png)
 
-2. Select **Bring your own API Key**.
+2. Select **Bring your own API Key** and press **Continue**.
 
 ![Bring your own API key](./images/cline-bring-your-own-api-key.png)
 
-3. Click **Continue**, then paste your provider API key and select a model.
-
-![Continue configuration](./images/cline-continue.png)
-
-**Note** If cline is not appearing, try restarting the VS Code environment after install.
-
-3. Save the settings and restart VS Code if prompted.
-
-## Task 4: Configure Cline for GitHub Copilot
-
-1. Go to the Extensions icon of Cline, and select Settings icon.
-
-2. Select Api Provider as GiHub Copilot
+3. Select the **Api Provider** and choose **GiHub Copilot**.
 
 ![Continue configuration](./images/GithubCopilotSelect.png)
 
-3. Select  copilot - copilot-fast model from Language Model drop down list.
+4. Select **copilot - copilot-fast model** from Language Model drop down list then select **Continue** to complete the configuration.
 
 ![Continue configuration](./images/ModelSelection.png)
 
-## Task 5: Install Visual Studio SQL Developer Extension
+5. You should see the Cline chat window appear upon completion.
+
+![Cline Chat](./images/cline_chat.png)
 
 
-1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
+## Task 6: Install Visual Studio SQL Developer Extension
+
+1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side 
+![Extensions Icon](./images/extensions.png)
+or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 
 2. Search for 'SQL Developer' in the searchbox.
 
 3. Click Install on the chosen extension.
-
 ![Continue configuration](./images/SQLDeveloperExt.png)
 
-## Task 6: [Windows Only] Install Git/GitBash 
+4. When prompted click **Trust Publisher and Install** to launch the install.
+![Trust Oracle Publisher Image](./images/orcltrust.png)
+
+5. You should see the following icon appear after the installation completes.
+![SQL Dev Extension Icon](./images/sqldevexticon.png)
+
+## Task 5: [Windows Only] Install Git/GitBash 
 
 1. Click Git icon and click download Git for Windows
 
