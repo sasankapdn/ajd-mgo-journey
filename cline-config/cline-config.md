@@ -68,9 +68,27 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 
 
-## Task 2: Create/Login Github 
+## Task 2: Create/Login Github & Connect to VS Code
 
 1. If you have a github account already you can proceed to the next step. If not please create a github account by following the instructions at this link [Sign up for GitHub](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home).
+
+
+2. Inside VS Code Navigate to the **Account Icon** and select **Backup and Sync**.
+
+   ![Github Accounts Icon](./images/accounts_icon.png)  
+
+3. A menu will appear at the top, select **Sign In**.
+
+   ![Sign In Link](./images/vscodesignin.png) 
+
+4. Next Select **Sign In with GitHub**
+   ![Sign In with Github](./images/github_signin.png) 
+
+5. Login to Github to link VS Code to your account and activate the free Co-pilot Credits.
+![Github login screen](./images/github_loginvscode.png)
+
+6. Once logged in you should see your name when you click on the accounts icon. 
+![Github login screen](./images/successlogin.png)
 
 ## Task 3: Install VS Code Extension: Cline
 
@@ -82,7 +100,7 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 4. Click Install on the chosen extension.
 
-![Install Extension](./images/ClineExt.png)  <!-- Placeholder; replace with actual image if available -->
+![Install Extension](./images/ClineExt.png)  
 
 ## Task 4: Install VS Code Extension: Github Copilot
 
@@ -151,20 +169,20 @@ or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 5. You should see the following icon appear after the installation completes.
 ![SQL Dev Extension Icon](./images/sqldevexticon.png)
 
-## Task 5: [Windows Only] Install Git/GitBash 
+## Task 6: [Windows Only] Install Git/GitBash 
 
 1. Click Git icon and click download Git for Windows
 
 ![Continue configuration](./images/GitBashInstall.png)
 
-2. Once you clicked download Git for Windows button, you can see a pop-up window to open the external website where you have redirected to Git Download and Install page.
+2. Once you clicked download Git for Windows button, you can see a pop-up window to open the external website [Install Git for Windows](https://git-scm.com/install/windows) where you have redirected to Git Download and Install page. Follow the installation instructions in the installation. 
 
 ![Continue configuration](./images/OpenGitWeb.png)
 
-### Task 6:  NodeJS Installation
+### Task 7:  NodeJS Installation
 
 ### Install NodeJS on macOS/Linux
-1. Go to Visual Studio Code and click Terminal and run following commands based on your operating system or you can download directly from NodeJS Official Website from this link (download: https://nodejs.org/en/download)
+1. Go to Visual Studio Code and click Terminal and run following commands based on your operating system or you can download directly from NodeJS Official Website from this link [Download Node.js](https://nodejs.org/en/download)
 
 ![Continue configuration](./images/Terminal.png)
 
@@ -174,14 +192,15 @@ or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 ``` \. "$HOME/.nvm/nvm.sh" ```
 * Download and install Node.js:
 ``` nvm install 24 ```
-* Verify the Node.js version:
-``` node -v ```
-* Verify npm version:
-``` npm -v ``` 
+
 
 ### Install NodeJS on Windows
 
-1. Download Windows Installer (.msi) from NodeJS Official Website from this link (download: https://nodejs.org/en/download) and install it.
+1. Download Windows Installer (.msi) from NodeJS Official Website from this link [Download Node.js](https://nodejs.org/en/download) and install it.
+
+![Windows Node Install](./images/windowsnodeinstall.png)
+
+2. Restart your Visual Studio Code IDE after install. 
 
 ### Confirm Your Installation
 
@@ -199,8 +218,10 @@ node -v
 ## Task 7: Test the Installation
 
 1. Open a code file in VS Code.
+![VS Code Open New File Image](./images/newfile.png)
 
-2. Activate Cline by using the extension's shortcut (or ctrl+shift+p, Cline: Focus on view).
+2. Activate Cline by using the extension's shortcut. 
+![Cline Icon](./images/clineicon.png)
 
 3. Create a small test file (for example `hello.js`) and paste this code:
 
@@ -239,9 +260,10 @@ With Cline installed, you can now use it for advanced coding tasks in your proje
 
 **Authors**  
 * **Luke Farley**, Senior Cloud Engineer, NA Data Platform S&E
+* **Sasanka Abeysinghe**, Principal Cloud Engineer, ONA Developer Experience
 
 **Contributors**
 * **Cline AI** 
 
 **Last Updated By/Date:**  
-* **Luke Farley**, Senior Cloud Engineer, NA Data Platform S&E, November 2025
+* **Sasanka Abeysinghe**, Principal Cloud Engineer, ONA Developer Experience
