@@ -188,11 +188,17 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
    ![Continue configuration](./images/Terminal.png)
 
 * Download and install nvm:
-```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash```
-* in lieu of restarting the shell
-``` \. "$HOME/.nvm/nvm.sh" ```
-* Download and install Node.js:
-``` nvm install 24 ```
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+   ```
+   * in lieu of restarting the shell
+   ```bash
+   \. "$HOME/.nvm/nvm.sh" 
+   ```
+   * Download and install Node.js:
+   ```bash 
+   nvm install 24 
+   ```
 
 
 ### Install NodeJS on Windows
@@ -207,10 +213,8 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 1. Open VS Code Terminal and Check Node Version to check it is properly installed.
 
-   ```bash
-   <copy>
-   node -v
-   </copy>
+   ```bash   
+   node -v   
    ```
 * You should see the version number appear if you completed the install correctly.
 

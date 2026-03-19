@@ -32,120 +32,111 @@ This lab assumes you have:
 
 2. Inside the Oracle Cloud Console and Click Navigation Menu.
 
-![Navingation Memu](./images/oci-hamburger.png)
+   ![Navingation Memu](./images/oci-hamburger.png)
 
 2. Navigate to **Oracle Database > Autonomous AI Database**.
 
-![Autonomous AI Database](./images/ai-database.png)
+   ![Autonomous AI Database](./images/ai-database.png)
 
 3. Click **Create Autonomous Database**.
 
-![Create Autonomous Database button](./images/AIDatabaseCreate.png)
+   ![Create Autonomous Database button](./images/AIDatabaseCreate.png)
 
 4. Rename Display name as **ajd-mongo-todo** 
-```
-ajd-mongo-todo 
-```
-Rename Database name as **ajdmongotodo**
-```bash
-<copy>
-ajdmongotodo 
-</copy>
-```
-Select **JSON Database** as the workload type.
+   ```
+   ajd-mongo-todo
+   ```
+   Rename Database name as **ajdmongotodo**
+   ```
+   ajdmongotodo
+   ```
+   Select **JSON Database** as the workload type.
 
-![AJD Mongo Todo](./images/ajd-mongo-todo.png)
+   ![AJD Mongo Todo](./images/ajd-mongo-todo.png)
 
+   Set the Database version to **26ai**.
+
+   ![26ai](./images/26ai.png)
 
 5. Set admin password and configure network access. Set access type to 'Secure access from allowed IPs and VCNs only' (add your IP to the ACL for security).
 
-![Access ACL](./images/ajd-acl.png)
+   ![Access ACL](./images/ajd-acl.png)
 
-Switch on “Add my IP address” -> That’ll directly include your IP Address in the ACL.
+   Switch on “Add my IP address” -> That’ll directly include your IP Address in the ACL.
 
-![Add My IP](./images/ajd-public-ip.png)
+   ![Add My IP](./images/ajd-public-ip.png)
 
-If you’re not sure from where you will want to connect from, you can change the IP notation type field to CIDR block, and enter a value of 0.0.0.0/0. That will allow you to connect from anywhere, but naturally you should only use that for testing.
+   If you’re not sure from where you will want to connect from, you can change the IP notation type field to CIDR block, and enter a value of 0.0.0.0/0. That will allow you to connect from anywhere, but naturally you should only use that for testing.
 
-**Note** Alternatively, to get your public ip address, you can go to whatismyipaddress.com, or run the following command
+   **Note** Alternatively, to get your public ip address, you can go to whatismyipaddress.com, or run the following command
 
-```bash
-<copy>
-curl -s ifconfig.me
-</copy>
-```
+   ```bash
+   curl -s ifconfig.me
+   ```
 
-6. Click **Create**.
+6. Click **Create**. Wait for the instance to provision. You should see the following once the provisioning has completed.
 
-Wait for the instance to provision (a few minutes).
+   ![Provisioned Image](./images/provisioned.png)
 
 ## Task 2: Create Mongo User 
 
-1. Navigate to Database Users in Autonomous AI Database  
+1. Navigate to **Database Users** in from your new Autonomous AI Database.  
 
-![Database Users](./images/database-user.png)
+   ![Database Users](./images/database-user.png)
 
-2. Select Create User 
+2. Select Create User. 
 
-![Create User](./images/create-user.png)
+   ![Create User](./images/create-user.png)
 
 3. Create new user e.g. **MONGO_USER** with associated password. Set Quota on tablespace to **UNLIMITED** and enable REST, GraphQL, MongoDB API, and Web access.
 
-![Create Mongo User](./images/mongo-user-1.png)
-<!--
-4. In the **Granted Roles** tab, verify the user has the **CONNECT** and **RESOURCE** roles.
-   - In many tenancies these are granted by default when creating the user.
-   - If they are missing, add them.
-
-![Grant User Roles](./images/mongo-user-2.png)
--->
-* **Note** For more details on creating users for MongoDB, see [User Management for MongoDB](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/mongo-using-oracle-database-api-mongodb.html#GUID-613DD3CE-6E84-4D8E-B614-2CFC18A41784)
+   ![Create Mongo User](./images/mongo-user-1.png)
 
 ## Task 3: Test mongo_user and SQL Connection.
 
-1. Go Back to ajd-mongo-todo database information page and click Database Connections
-![Database Users](./images/DatabaseConn.png)
+1. Go Back to ajd-mongo-todo database information page and click **Database Connections**
+   ![Database Users](./images/DatabaseConn.png)
 
-2. Click Download wallet Button
-![Database Users](./images/DownloadWallet.png)
+2. Click **Download wallet** Button
+   ![Database Users](./images/DownloadWallet.png)
 
 3. Please create a password for this wallet. Some database clients will require that you provide both the wallet and password to connect to your database (other clients will auto-login using the wallet without a password).
 
-![Database Users](./images/DownloadWalletwithPWD.png)
+   ![Database Users](./images/DownloadWalletwithPWD.png)
 
-4. Go Back to SQL Developer VS Code Extension and Click create connection
+4. Go Back to VS Code and open the **SQL Developer Extension**.Then click **Create Connection**.
 
-![Database Users](./images/VSDBConn.png)
+   ![Database Users](./images/VSDBConn.png)
 
-5. Enter Connection Name, Enter Username as ``` mongo_user```, password for mongo_user, Click Connection Type as Cloud Wallet, Click Choose File and give downloaded wallet zip file loction, Click Service type as AJSMONDOTODO_MEDIUM, and Click Test Button.
+5. Enter Connection Name, Enter Username as ```mongo_user```, password for mongo_user, Click Connection Type as Cloud Wallet, Click Choose File and give downloaded wallet zip file loction, Click Service type as AJSMONDOTODO_MEDIUM, and Click Test Button.
 
-![Database Users](./images/VSDNConfig.png)
+   ![Database Users](./images/VSDNConfig.png)
 
 5. You can see Test succesfully passed for connection.
 
-![Database Users](./images/VSDBConnPass.png)
+   ![Database Users](./images/VSDBConnPass.png)
 
 6. Save Connection by clicking Save Button.
 
-![Database Users](./images/VSDNConnSave.png)
+   ![Database Users](./images/VSDNConnSave.png)
 
 6. Also, you can View Connection and Expand to view all objects from SQL Extension.
 
-![Database Users](./images/VSDBConnView.png)
+   ![Database Users](./images/VSDBConnView.png)
 
 ## Task 4: Enable MongoDB API
 
-1. In the AJD details page, go to **Tool Configuration**.
+1. In the AI JSON Database details page, go to **Tool Configuration**.
 
-![Tool Configuration](./images/ToolConfig.png)
-
-
-2. Scroll down, and Under **MongoDB API** set the status to Enabled.
-
-![Enable Access](./images/MongoDBStatus.png)
+   ![Tool Configuration](./images/ToolConfig.png)
 
 
-### Formatting the connection string (recommended)
+2. Scroll down, and Under **MongoDB API** confirm your status is set to Enabled.
+
+   ![Enable Access](./images/MongoDBStatus.png)
+
+
+### Formatting the Connection String 
 
 1. Copy the connection string from the OCI Console and paste it into a text editor.
 2. Replace placeholders:
@@ -177,7 +168,6 @@ AJDMONGOTODO.adb.us-ashburn-
 1.oraclecloudapps.com:27017/mongo_user?
 authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=fals
 e&loadBalanced=true
-</copy>
 ```
 
 *  If human steps and images you  will need to copy the connection string. 
@@ -191,11 +181,8 @@ Replace placeholders with your details. URL-encode special characters in the pas
 
 The connection string format is:
 ```bash
-<copy>
 mongodb://<user>:<password>@<hostname>:27017/<user>?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
-</copy>
 ```
-
 
 You are now ready for Lab 3 to build the To-Do app.
 
