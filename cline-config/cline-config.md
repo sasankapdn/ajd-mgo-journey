@@ -82,13 +82,16 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
    ![Sign In Link](./images/vscodesignin.png) 
 
 4. Next Select **Sign In with GitHub**
+
    ![Sign In with Github](./images/github_signin.png) 
 
 5. Login to Github to link VS Code to your account and activate the free Co-pilot Credits.
-![Github login screen](./images/github_loginvscode.png)
+
+   ![Github login screen](./images/github_loginvscode.png)
 
 6. Once logged in you should see your name when you click on the accounts icon. 
-![Github login screen](./images/successlogin.png)
+
+   ![Github login screen](./images/successlogin.png)
 
 ## Task 3: Install VS Code Extension: Cline
 
@@ -104,25 +107,20 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 ## Task 4: Install VS Code Extension: Github Copilot
 
-1. Navigate to your operating system 
-
-2. Open Visual Studio Code.
-
-2. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
+1. Inside VS Code, go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 
    ![Github Extension Icon](./images/githubextensions.png)
 
-3. Search for 'GitHub Copilot' in the searchbox.
-
-4. Click Install on the chosen extension.
+2. Search for 'GitHub Copilot' in the searchbox.The select **Install**.
 
    ![Install Extension](./images/GithubCopilotExt.png) 
 
-5. When prompted select that you trust the publisher.
+3. When prompted select **Trust Publisher & Install**.
 
    ![Trust Prompt for Extension](./images/github_extension_trust.png)
 
-6. When the install completes you should see the Cline icon appear in VS Code.
+4. When the install completes you should see the Cline icon appear in VS Code on the left menu bar.
+   
    ![Cline Icon](./images/clineicon.png)
 
 
@@ -154,37 +152,40 @@ Visual Studio Code on Windows - (https://code.visualstudio.com/docs/setup/window
 
 ## Task 6: Install Visual Studio SQL Developer Extension
 
-1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar on the side 
-![Extensions Icon](./images/extensions.png)
-or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
+1. Go to the Extensions view by clicking the Extensions icon in the Activity Bar.
+   
+   ![Extensions Icon](./images/extensions.png)
 
-2. Search for 'SQL Developer' in the searchbox.
+- Or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS) to open the extension menu.
 
-3. Click Install on the chosen extension.
-![Continue configuration](./images/SQLDeveloperExt.png)
+2. Search for **SQL Developer** in the searchbox and click **Install** on the chosen extension.
+   
+   ![Continue configuration](./images/SQLDeveloperExt.png)
 
 4. When prompted click **Trust Publisher and Install** to launch the install.
-![Trust Oracle Publisher Image](./images/orcltrust.png)
+   
+   ![Trust Oracle Publisher Image](./images/orcltrust.png)
 
 5. You should see the following icon appear after the installation completes.
-![SQL Dev Extension Icon](./images/sqldevexticon.png)
+
+   ![SQL Dev Extension Icon](./images/sqldevexticon.png)
 
 ## Task 6: [Windows Only] Install Git/GitBash 
 
 1. Click Git icon and click download Git for Windows
 
-![Continue configuration](./images/GitBashInstall.png)
+   ![Continue configuration](./images/GitBashInstall.png)
 
 2. Once you clicked download Git for Windows button, you can see a pop-up window to open the external website [Install Git for Windows](https://git-scm.com/install/windows) where you have redirected to Git Download and Install page. Follow the installation instructions in the installation. 
 
-![Continue configuration](./images/OpenGitWeb.png)
+   ![Continue configuration](./images/OpenGitWeb.png)
 
 ### Task 7:  NodeJS Installation
 
 ### Install NodeJS on macOS/Linux
 1. Go to Visual Studio Code and click Terminal and run following commands based on your operating system or you can download directly from NodeJS Official Website from this link [Download Node.js](https://nodejs.org/en/download)
 
-![Continue configuration](./images/Terminal.png)
+   ![Continue configuration](./images/Terminal.png)
 
 * Download and install nvm:
 ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash```
@@ -198,7 +199,7 @@ or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 
 1. Download Windows Installer (.msi) from NodeJS Official Website from this link [Download Node.js](https://nodejs.org/en/download) and install it.
 
-![Windows Node Install](./images/windowsnodeinstall.png)
+   ![Windows Node Install](./images/windowsnodeinstall.png)
 
 2. Restart your Visual Studio Code IDE after install. 
 
@@ -206,18 +207,18 @@ or pressing `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (macOS).
 
 1. Open VS Code Terminal and Check Node Version to check it is properly installed.
 
-```bash
-<copy>
-node -v
-</copy>
-```
+   ```bash
+   <copy>
+   node -v
+   </copy>
+   ```
 * You should see the version number appear if you completed the install correctly.
 
-![node version](./images/nodeversion.png)
+   ![node version](./images/nodeversion.png)
 
 ## Task 7: Test the Installation
 
-1. Open a code file in VS Code.
+1. Open a code file in VS Code by selecting **File** then **New Text File** from the VS Code menu.
 ![VS Code Open New File Image](./images/newfile.png)
 
 2. Activate Cline by using the extension's shortcut. 
@@ -231,28 +232,28 @@ node -v
       }
       module.exports = { add };
    ```
-![Continue configuration](./images/AddFile.png)
+   ![Continue configuration](./images/AddFile.png)
 
 4. In VS Code, highlight the code and either:
    - Right-click and choose **Add to Cline**, or
    - Copy/paste it into the Cline chat panel.
 
-![Continue configuration](./images/AddToCline.png)
+   ![Continue configuration](./images/AddToCline.png)
 
 5. Ask Cline:
    - "Explain what this code does and suggest one improvement."
 
-![Continue configuration](./images/RunTestCode.png)
+   ![Continue configuration](./images/RunTestCode.png)
 
 6. Verify that Cline responds correctly using your configured LLM.
 
-![Continue configuration](./images/TestCodeReview.png)
+   ![Continue configuration](./images/TestCodeReview.png)
 
 ---
 
 ## Next Steps
 
-With Cline installed, you can now use it for advanced coding tasks in your projects. Explore features like tool usage (e.g., reading/writing files, executing commands) and integrate it into your workflow. Refer to the extension's documentation for more advanced configurations.
+With Cline installed, you can now use it for advanced coding tasks in your projects. In the coming labs we will showcase sample prompts leveraging Cline to build and migrate an application.
 
 ---
 
