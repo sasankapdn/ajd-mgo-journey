@@ -5,11 +5,27 @@
 To-Do App UI Screenshot Above Fold  
 To-Do App UI Screenshot CRUD Actions  
 
-In this lab you will use Cline to **vibe code a full-stack MongoDB-compatible application** backed by Oracle Autonomous JSON Database (AJD).
+Application development is rapidly evolving. Developers are no longer required to manually write every line of code or scaffold every project structure themselves. Instead, modern workflows increasingly involve collaborating with AI agents that can generate working implementations based on intent, guidance, and iterative feedback. This emerging style of development is often called **vibe coding**.
 
-Rather than manually writing every file, you will guide an AI agent to scaffold, connect, and run your application. This demonstrates how existing MongoDB development workflows can continue unchanged while AJD powers the backend.
+Vibe coding focuses on communicating *what you want to build* rather than typing every instruction required to build it. Developers guide the AI agent, review proposed changes, validate results, and continuously refine the application. This allows teams to move faster while still maintaining control over architecture, quality, and security.
 
-Results will vary depending on your prompts and coaching.
+In this lab, you will apply vibe coding techniques to build a **full-stack MongoDB-compatible To-Do application** backed by **Oracle Autonomous JSON Database (AJD)** using its MongoDB API.
+
+The purpose of this lab goes beyond creating a simple CRUD application. It demonstrates an important architectural concept:
+
+> Existing MongoDB development workflows and tooling can continue unchanged while Oracle AI Database provides a scalable, autonomous, enterprise-ready backend.
+
+Using Cline as your AI development assistant, you will guide the agent to:
+
+- create a new project workspace  
+- generate backend CRUD services using Express and the MongoDB Node driver  
+- configure connectivity to an AJD instance  
+- produce a lightweight browser-based frontend  
+- run and validate the full application locally  
+
+This lab is intentionally **open-ended and outcome-driven**. AI-generated code is non-deterministic, meaning your implementation may differ from screenshots or examples. Image checkpoints throughout the lab act as confidence markers to help you verify that you are progressing correctly even if your exact UI layout or code structure varies.
+
+By the end of this lab, you will have successfully vibe coded a working application that proves Mongo developers can adopt Oracle Autonomous JSON Database with minimal friction. This approach enables improved scalability, automation, and AI-ready data capabilities without requiring a full stack rewrite.
 
 **Estimated Time:** 35 minutes
 
