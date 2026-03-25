@@ -2,30 +2,23 @@
 
 ## Introduction
 
-To-Do App UI Screenshot Above Fold  
-To-Do App UI Screenshot CRUD Actions  
+To-Do App UI Screenshot Above Fold
+*This screenshot shows the final To-Do application layout that you will build by the end of the sprints. Use it as a visual success target.*
 
-Application development is rapidly evolving. Developers are no longer required to manually write every line of code or scaffold every project structure themselves. Instead, modern workflows increasingly involve collaborating with AI agents that can generate working implementations based on intent, guidance, and iterative feedback. This emerging style of development is often called **vibe coding**.
+To-Do App UI Screenshot CRUD Actions
+*This screenshot highlights completing and deleting todos, demonstrating the full CRUD workflow that you will implement.*
 
-Vibe coding focuses on communicating *what you want to build* rather than typing every instruction required to build it. Developers guide the AI agent, review proposed changes, validate results, and continuously refine the application. This allows teams to move faster while still maintaining control over architecture, quality, and security.
+Modern developers are increasingly using AI agents to accelerate application development. Instead of writing every file manually, developers can now guide intelligent tooling to scaffold projects, generate working code, and iterate quickly. This emerging workflow is often referred to as **vibe coding** — a collaborative development approach where the developer focuses on intent, architecture, and validation while the AI assists with implementation.
 
-In this lab, you will apply vibe coding techniques to build a **full-stack MongoDB-compatible To-Do application** backed by **Oracle Autonomous JSON Database (AJD)** using its MongoDB API.
+In this lab, you will apply vibe coding techniques to build a full-stack MongoDB-compatible To-Do application backed by **Oracle Autonomous JSON Database (AJD)** using its MongoDB API.
 
-The purpose of this lab goes beyond creating a simple CRUD application. It demonstrates an important architectural concept:
+The goal is not just to build a simple CRUD application. It demonstrates a key architectural concept:
 
-> Existing MongoDB development workflows and tooling can continue unchanged while Oracle AI Database provides a scalable, autonomous, enterprise-ready backend.
+> Existing MongoDB development patterns can continue unchanged while Oracle AI Database provides a scalable, autonomous backend.
 
-Using Cline as your AI development assistant, you will guide the agent to:
+You will guide the AI assistant through a sequence of **development sprints**, each representing a focused milestone in building the application.
 
-- create a new project workspace  
-- generate backend CRUD services using Express and the MongoDB Node driver  
-- configure connectivity to an AJD instance  
-- produce a lightweight browser-based frontend  
-- run and validate the full application locally  
-
-This lab is intentionally **open-ended and outcome-driven**. AI-generated code is non-deterministic, meaning your implementation may differ from screenshots or examples. Image checkpoints throughout the lab act as confidence markers to help you verify that you are progressing correctly even if your exact UI layout or code structure varies.
-
-By the end of this lab, you will have successfully vibe coded a working application that proves Mongo developers can adopt Oracle Autonomous JSON Database with minimal friction. This approach enables improved scalability, automation, and AI-ready data capabilities without requiring a full stack rewrite.
+By the end of this lab, you will have vibe coded a complete source application that will later be migrated in the next lab.
 
 **Estimated Time:** 35 minutes
 
@@ -35,11 +28,11 @@ By the end of this lab, you will have successfully vibe coded a working applicat
 
 In this lab you will:
 
-- Experiment with vibe coding using Cline  
-- Scaffold a Node.js + Express + MongoDB CRUD application  
-- Configure connection to AJD using MongoDB API  
-- Generate a simple frontend UI  
-- Run and validate the full application  
+* Run structured AI-assisted development sprints
+* Build a Node.js + Express MongoDB CRUD backend
+* Generate a browser-based UI
+* Connect the application to AJD
+* Validate end-to-end functionality
 
 ---
 
@@ -47,239 +40,292 @@ In this lab you will:
 
 This lab assumes you have:
 
-- Completed all previous labs  
-- Node.js and NPM installed  
-- A valid AJD MongoDB API connection string  
-- VS Code with Cline extension configured  
-
-⚐ Note:  
-In this lab you must allow your AI Agent to create folders, generate files, and install dependencies.
+* Completed previous labs
+* Node.js and npm installed
+* An AJD MongoDB API connection string
+* VS Code with Cline configured
 
 ---
 
-## Task 1: Preparing the Workspace
+## Task 1: Sprint 0 — Grounding the AI Session
 
-*add image: VS Code terminal open*
+**Goal:** Provide context so the AI understands the persona and architecture.
 
-Open a new terminal in VS Code.
+**Prompt**
 
-Ask Cline to prepare your workspace:
-
-```
-Create a new project directory named `todo-app` and change into that directory.
-```
-
-*add image: Cline creating project directory*
-
-If you prefer manual setup:
-
-```bash
-mkdir todo-app
-cd todo-app
-```
-
-Next, guide the agent to plan the application:
+Provide this grounding prompt:
 
 ```
-I am building a Node.js Express MongoDB CRUD To-Do application that will connect to Oracle AJD via MongoDB API.  
-Create a step-by-step development plan and list the files required.
+Hi Cline, we are starting a new lab.
+
+We are building a Node.js To-Do CRUD application.
+
+The persona is a MongoDB developer building from scratch.
+However, the backend database will be Oracle Autonomous JSON Database using its MongoDB API.
+
+We will build this application in structured development sprints.
+Please acknowledge and confirm readiness for Sprint 1.
 ```
 
-*add image: Agent generated plan*
+**Planning Screenshot**
 
-Review the plan carefully before allowing execution.
+Sprint 0 Planning Screenshot
+*This screenshot shows the AI summarizing the development approach and confirming understanding of the Mongo developer persona and AJD backend.*
+
+**Result Screenshot**
+
+Sprint 0 Result Screenshot
+*This screenshot confirms the AI has acknowledged the sprint structure and is ready to proceed.*
 
 ---
 
-## Task 2: Installing Dependencies
+## Task 2: Sprint 1 — Project Setup and AJD Connection
 
-*add image: Dependency install prompt*
-
-Ask the agent:
+**Prompt**
 
 ```
-Provide the command to install dependencies required for an Express MongoDB CRUD application.
+Sprint 1
+
+Initialize a new Node.js project and install express and mongodb.
+
+Create a server.js file with an Express server listening on port 3000.
+
+Add MongoDB connection logic using MongoClient.
+Read the connection string from environment variable MONGO_API_URL.
+
+Create an async connectDB function that connects and pings the admin database.
+Call this function during server startup.
+
+Create a global db variable accessible by routes.
+
+Add express.json middleware.
+
+This should prepare us for Sprint 2
 ```
 
-You should see a response similar to:
+**Planning Screenshot**
 
-```
-npm install express mongodb
-```
+Sprint 1 Planning Screenshot
+*This screenshot illustrates the AI planning project initialization, dependency installation, and database connection setup.*
 
-*add image: Dependency install result*
+**Result Screenshot**
 
-Manual alternative:
-
-```bash
-npm install express mongodb
-```
+Sprint 1 Result Screenshot
+*This screenshot shows the generated project files and a successful AJD connection message in the terminal.*
 
 ---
 
-## Task 3: Generating the Backend
+## Task 3: Sprint 2 — Create and Read (C, R)
 
-*add image: Backend generation prompt*
-
-Now guide the agent to create the backend service:
+**Prompt**
 
 ```
-Generate an Express server with CRUD endpoints for a `todos_source` collection using the MongoDB Node driver.  
-Read SOURCE_MONGO_API_URL and COLLECTION_NAME from environment variables.
+Add GET /api/todos route returning db.collection('todos').find().toArray().
+
+Add POST /api/todos route that inserts a todo with fields text and completed:false.
+
+Create a public folder and index.html file.
+
+Serve static files using express.static.
+
+Generate a simple UI with:
+- heading
+- input field
+- add button
+- unordered list
+
+Add frontend JavaScript that fetches todos and renders them.
 ```
 
-*add image: Agent generating server*
+**Planning Screenshot**
 
-Carefully review proposed changes before approving.
+Sprint 2 Planning Screenshot
+*This screenshot shows the AI outlining API route creation and frontend UI generation steps.*
 
-⚐ Note:  
-LLMs sometimes introduce merge markers or incomplete code. If this occurs, provide feedback or manually correct files.
+**Result Screenshot**
+
+Sprint 2 Result Screenshot
+*This screenshot displays the running UI where new todos can be added and listed.*
 
 ---
 
-## Task 4: Configuring the Database Connection
+## Task 4: Sprint 3 — Update, Delete and Polish
 
-*add image: Environment variable prompt*
-
-Ask the agent:
+**Prompt**
 
 ```
-Provide the shell command to set SOURCE_MONGO_API_URL in this terminal session.
+Import ObjectId from mongodb.
+
+Add DELETE /api/todos/:id route removing document by _id.
+
+Add PUT /api/todos/:id route updating completed:true.
+
+Update frontend to add Complete and Delete buttons.
+Buttons should call the PUT and DELETE endpoints.
 ```
 
-Example (Mac/Linux):
+**Planning Screenshot**
 
-```bash
-export SOURCE_MONGO_API_URL='your-connection-string'
-```
+Sprint 3 Planning Screenshot
+*This screenshot captures the AI describing enhancements to support update and delete functionality.*
 
-Example (PowerShell):
+**Result Screenshot**
 
-```powershell
-$env:SOURCE_MONGO_API_URL="your-connection-string"
-```
-
-*add image: Environment variable confirmation*
+Sprint 3 Result Screenshot
+*This screenshot shows completed todos being visually updated and removed from the list.*
 
 ---
 
-## Task 5: Generating the Frontend
+## Task 5: Sprint 4 — Run and Validate
 
-*add image: Creating public folder*
-
-Ask the agent:
+**Prompt**
 
 ```
-Create a public folder for frontend assets.
+Provide the command to run the server locally and how to verify application health.
 ```
 
-Then request UI generation:
+**Planning Screenshot**
 
-```
-Generate a simple public/index.html frontend that calls the To-Do CRUD endpoints.
-```
+Sprint 4 Planning Screenshot
+*This screenshot shows the AI outlining how to start the server and validate endpoints.*
 
-*add image: Generated UI preview*
+**Result Screenshot**
 
-Your UI should allow:
-
-- Adding todos  
-- Completing todos  
-- Deleting todos  
-
----
-
-## Task 6: Running the Application
-
-*add image: Run command prompt*
-
-Ask the agent:
-
-```
-Provide the command to run this application locally and how to verify it is running.
-```
-
-Expected response:
-
-```
-node server.js
-```
-
-*add image: Server running*
+Sprint 4 Result Screenshot
+*This screenshot confirms the application is accessible in the browser and CRUD actions are functioning.*
 
 Open:
 
+[http://localhost:3000](http://localhost:3000)
+
+Create, complete, and delete todos.
+
+---
+
+## Optional: Use Pre‑Generated Artifacts
+
+If you would like to proceed to the next lab without running the AI prompts, you may copy and paste the following reference implementation.
+
+### server.js
+
+```javascript
+const express = require('express');
+const { MongoClient, ObjectId } = require('mongodb');
+
+const app = express();
+app.use(express.json());
+app.use(express.static('public'));
+
+const uri = process.env.MONGO_API_URL;
+let db;
+
+async function connectDB() {
+  const client = new MongoClient(uri);
+  await client.connect();
+  db = client.db();
+  console.log('Connected to AJD');
+}
+
+app.get('/api/todos', async (req, res) => {
+  const todos = await db.collection('todos').find().toArray();
+  res.json(todos);
+});
+
+app.post('/api/todos', async (req, res) => {
+  const todo = { text: req.body.text, completed: false };
+  await db.collection('todos').insertOne(todo);
+  res.json({ status: 'ok' });
+});
+
+app.put('/api/todos/:id', async (req, res) => {
+  await db.collection('todos').updateOne(
+    { _id: new ObjectId(req.params.id) },
+    { $set: { completed: true } }
+  );
+  res.json({ status: 'ok' });
+});
+
+app.delete('/api/todos/:id', async (req, res) => {
+  await db.collection('todos').deleteOne({ _id: new ObjectId(req.params.id) });
+  res.json({ status: 'ok' });
+});
+
+connectDB().then(() => {
+  app.listen(3000, () => console.log('Server running on port 3000'));
+});
 ```
-http://localhost:3000
-```
 
-*add image: Application running*
+### public/index.html
 
-Add and manage todos to validate CRUD functionality.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>To‑Do App</title>
+</head>
+<body>
+<h1>Todos</h1>
+<input id="todoInput" />
+<button onclick="addTodo()">Add</button>
+<ul id="list"></ul>
 
-Optional verification:
+<script>
+async function loadTodos() {
+  const res = await fetch('/api/todos');
+  const todos = await res.json();
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+  todos.forEach(t => {
+    const li = document.createElement('li');
+    li.innerHTML = `${t.text}
+      <button onclick="completeTodo('${t._id}')">Complete</button>
+      <button onclick="deleteTodo('${t._id}')">Delete</button>`;
+    list.appendChild(li);
+  });
+}
 
-```bash
-curl http://localhost:3000/api/status
-```
+async function addTodo() {
+  const text = document.getElementById('todoInput').value;
+  await fetch('/api/todos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text })
+  });
+  loadTodos();
+}
 
-Expected result:
+async function completeTodo(id) {
+  await fetch(`/api/todos/${id}`, { method: 'PUT' });
+  loadTodos();
+}
 
-```
-{ "status": "ok" }
+async function deleteTodo(id) {
+  await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+  loadTodos();
+}
+
+loadTodos();
+</script>
+</body>
+</html>
 ```
 
 ---
 
-## Task 7: Comparing Results
+## Wrap‑up
 
-*add image: Sample UI above fold*  
-*add image: Sample UI CRUD interaction*
+You have successfully vibe coded a complete MongoDB‑compatible application powered by Oracle Autonomous JSON Database.
 
-Your generated application will be unique.
+This application will serve as the **source system** for the migration lab.
 
-Compare:
-
-- layout  
-- endpoint behavior  
-- CRUD workflow  
-- responsiveness  
-
-You may continue iterating with the agent to enhance styling or functionality.
-
----
-
-## Task 8: Troubleshooting
-
-*add image: Merge conflict example*
-
-Common issues include:
-
-- merge conflict markers in generated files  
-- missing dependencies  
-- incorrect environment variables  
-- agent prematurely claiming completion  
-
-Provide console errors or logs to guide the agent.
-
-*add image: Agent re-prompting*
-
----
-
-## Wrap-up
-
-You have successfully vibe coded a full-stack MongoDB-compatible application powered by Oracle Autonomous JSON Database.
-
-This demonstrates how developers can maintain familiar MongoDB tooling and workflows while leveraging AJD scalability and performance.
-
-You may now proceed to the next lab.
+You may now proceed to Lab 4.
 
 ---
 
 ## Acknowledgements
 
-**Author**  
-Luke Farley, Senior Cloud Engineer  
+Author
+Luke Farley
 
-**Last Updated**  
+Last Updated
 November 2025
