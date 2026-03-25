@@ -1,388 +1,269 @@
-# Lab 3: Build the To-Do App
+# Lab 3: Vibe Coding the AJD Mongo To-Do App
 
 ## Introduction
 
-In this lab, you'll set up the Node.js/Express backend for the To-Do app, connecting it to your AJD instance using the MongoDB driver, and create a simple HTML/JavaScript frontend to interact with it. This demonstrates how existing MongoDB code works directly with AJD and completes the full-stack app.
+To-Do App UI Screenshot Above Fold  
+To-Do App UI Screenshot CRUD Actions  
 
-> **Estimated Time:** 35 minutes
+In this lab you will use Cline to **vibe code a full-stack MongoDB-compatible application** backed by Oracle Autonomous JSON Database (AJD).
 
-**Note:** AI generated code is non deterministic. The instructions below first provide prompts for you to run in cline and review the results. In the event you are not happy with the generated output please delete the generated code and manually execute the code blocks in the [Optional] section. These code blocks have been tested to insure the labs successful completion.
+Rather than manually writing every file, you will guide an AI agent to scaffold, connect, and run your application. This demonstrates how existing MongoDB development workflows can continue unchanged while AJD powers the backend.
 
----
+Results will vary depending on your prompts and coaching.
 
-### Objectives
-
-In this lab, you will:
-- Learn and Experiment with Vibe Coding and Cline
-- Create project directory and install dependencies
-- Configure the connection to AJD and implement CRUD operations
-- Create the Frontend UI
-- Run and Test the Full Application
+**Estimated Time:** 35 minutes
 
 ---
 
-### Prerequisites
+## Objectives
+
+In this lab you will:
+
+- Experiment with vibe coding using Cline  
+- Scaffold a Node.js + Express + MongoDB CRUD application  
+- Configure connection to AJD using MongoDB API  
+- Generate a simple frontend UI  
+- Run and validate the full application  
+
+---
+
+## Prerequisites
 
 This lab assumes you have:
-- Completed all prior labs
-- Node.js and NPM installed
-- Have a working AJD connection string
+
+- Completed all previous labs  
+- Node.js and NPM installed  
+- A valid AJD MongoDB API connection string  
+- VS Code with Cline extension configured  
+
+⚐ Note:  
+In this lab you must allow your AI Agent to create folders, generate files, and install dependencies.
 
 ---
 
-## Task 1: Create Project Directory
+## Task 1: Preparing the Workspace
 
-1. Open a new terminal in VS Code. 
+*add image: VS Code terminal open*
 
-<!-- *add image: VS Code with a new terminal open and ready for the Lab 3 app setup.* -->
-![Click Terminal](./images/ClickTerminal.png)
+Open a new terminal in VS Code.
 
-![Open Terminal](./images/OpenTerminal.png)
-
-2. Ask Cline to create a new directory for you called todo-app.
+Ask Cline to prepare your workspace:
 
 ```
-add prompt: Ask Cline to create a new project directory named `todo-app` and then change into that directory.
+Create a new project directory named `todo-app` and change into that directory.
 ```
-<!-- *add image: Cline response showing the command or steps to create and enter the `todo-app` directory.* -->
 
-![Cline Prompt](./images/ClinePromptDirectory.png)
+*add image: Cline creating project directory*
 
-![Cline Result](./images/ClinePromptDirectoryCreate.png)
-
-[Optional] Manually create a new directory for your app:
+If you prefer manual setup:
 
 ```bash
-<copy>
 mkdir todo-app
 cd todo-app
-</copy>
 ```
 
-3. Initialize NPM with the following prompt:
+Next, guide the agent to plan the application:
 
- **Cline prompt:**
 ```
-<copy>
-I’m building a Node.js + Express + MongoDB CRUD To-Do app that will connect to Oracle AJD via the MongoDB API. Create a step-by-step plan and confirm what files I should create.”
-</copy>
+I am building a Node.js Express MongoDB CRUD To-Do application that will connect to Oracle AJD via MongoDB API.  
+Create a step-by-step development plan and list the files required.
 ```
 
-<!-- *add image: Cline response showing the step-by-step project plan and expected files for the To-Do app.* -->
+*add image: Agent generated plan*
 
-![Cline Prompt](./images/InitializePrompt.png)
+Review the plan carefully before allowing execution.
 
-![Cline Result](./images/CompletedSteps.png)
+---
 
-[Optional] Manually initialize NPM.
-```bash
-<copy>
-npm init -y
-</copy>
+## Task 2: Installing Dependencies
+
+*add image: Dependency install prompt*
+
+Ask the agent:
+
 ```
-![node version](./images/npninit.png)
-
-
-## Task 2: Install Dependencies
-
-1. Install Express and MongoDB driver:
-```
-Add prompt: Ask Cline for the command to install the required dependencies for an Express and MongoDB-based To-Do app.
+Provide the command to install dependencies required for an Express MongoDB CRUD application.
 ```
 
-<!-- *add image: Cline response showing the dependency install command, ideally `npm install express mongodb`.* -->
+You should see a response similar to:
 
-![Express Prompt](./images/ExpressPrompt.png)
-
-![Express Result](./images/ExpressResult.png)
-
-[Optional] Manually install express and mongo driver.
-```bash
-<copy>
+```
 npm install express mongodb
-</copy>
-```
-![node version](./images/mongodbinstall.png)
-
-
-## Task 3: Create server.js
-
-1. We will now Create a file named `server.js` and generate a basic application. To do this enter the following prompt. 
-
-```
-<copy>
-Generate an Express server with CRUD endpoints for a `todos_source` collection using the Node MongoDB driver. Read `SOURCE_MONGO_API_URL` and `COLLECTION_NAME` from environment variables.
-</copy>
-```
-<!-- *add image: Cline prompt box containing the `server.js` generation request before execution.* -->
-
-![Endpoint Prompt](./images/EndpointPrompt.png)
-
-2. Execute the prompt by pressing the run arrow. Watch as Cline generates and proposes your code. 
-
-<!-- *add image: Cline generating or proposing the `server.js` file content.* -->
-
-![Endpoint Prompt](./images/GeneratedServerJS.png)
-
-3. You should see something like the following appear on your screen. Review and accept the results. 
-
-<!--  *add image: Cline output showing the completed `server.js` draft ready for review and acceptance.* -->
-
-[Optional]  In the event you are not happy with the code generated by Cline, please replace with the code segment below which has been tested to work for future steps. 
-
-```javascript
-<copy>
-// server.js
-//require('dotenv').config(); // only if using .env
-
-const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-const COLLECTION_NAME = process.env.COLLECTION_NAME || 'todos_source';
-
-app.use(express.json());
-app.use(express.static('public'));
-
-let db;
-
-async function connectDB() {
-  const client = new MongoClient(process.env.SOURCE_MONGO_API_URL);
-  await client.connect();
-  db = client.db(); // use default DB from connection string
-  // Optional: Ping to test connection
-  await db.command({ ping: 1 });
-  console.log('Connected to Oracle AJD (Mongo API)');
-}
-
-app.get('/api/status', async (req, res) => {
-  try {
-    await db.command({ ping: 1 });
-    res.json({ status: 'ok' });
-  } catch (err) {
-    res.status(500).json({ status: 'error', error: err.message });
-  }
-});
-
-// Read todos
-app.get('/api/todos', async (req, res) => {
-    const todos = await db.collection(COLLECTION_NAME).find().toArray();
-    res.json(todos);
-  });
-  
-// Create todo
-app.post('/api/todos', async (req, res) => {
-    const todo = { text: req.body.text, completed: false };
-    const result = await db.collection(COLLECTION_NAME).insertOne(todo);
-    res.json({ _id: result.insertedId, ...todo });
-});
-  
-// Update todo (mark as completed)
-app.put('/api/todos/:id', async (req, res) => {
-const result = await db.collection(COLLECTION_NAME).updateOne(
-    { _id: new ObjectId(req.params.id) },
-    { $set: { completed: true } }
-);
-res.json({ modifiedCount: result.modifiedCount });
-});
-  
-// Delete todo
-app.delete('/api/todos/:id', async (req, res) => {
-    const result = await db.collection(COLLECTION_NAME).deleteOne({ _id: new ObjectId(req.params.id) });
-    res.json({ deletedCount: result.deletedCount });
-});
-
-app.listen(PORT, async () => {
-  await connectDB();
-  console.log(`Server listening on port ${PORT}`);
-});
-</copy>
 ```
 
-## Task 4: Configure Environment
+*add image: Dependency install result*
 
-1. Set the env variable **SOURCE\_MONGO\_API\_URL**:
+Manual alternative:
 
-```
-Add Cline Command: Ask Cline for the exact shell command to set `SOURCE_MONGO_API_URL` in the current terminal session.
-```
-
-<!-- *add image: Cline response showing the environment variable export command for `SOURCE_MONGO_API_URL`.* -->
-
-![node version](./images/SetMongoDBURL.png)
-
-[Optional] GitBash/Linux/MacOS
 ```bash
-<copy>
-export SOURCE_MONGO_API_URL='your-connection-string'
-</copy>
+npm install express mongodb
 ```
-![node version](./images/ExportMacLinux.png)
 
-[Optional] Windows (PowerShell):
+---
+
+## Task 3: Generating the Backend
+
+*add image: Backend generation prompt*
+
+Now guide the agent to create the backend service:
+
+```
+Generate an Express server with CRUD endpoints for a `todos_source` collection using the MongoDB Node driver.  
+Read SOURCE_MONGO_API_URL and COLLECTION_NAME from environment variables.
+```
+
+*add image: Agent generating server*
+
+Carefully review proposed changes before approving.
+
+⚐ Note:  
+LLMs sometimes introduce merge markers or incomplete code. If this occurs, provide feedback or manually correct files.
+
+---
+
+## Task 4: Configuring the Database Connection
+
+*add image: Environment variable prompt*
+
+Ask the agent:
+
+```
+Provide the shell command to set SOURCE_MONGO_API_URL in this terminal session.
+```
+
+Example (Mac/Linux):
+
+```bash
+export SOURCE_MONGO_API_URL='your-connection-string'
+```
+
+Example (PowerShell):
 
 ```powershell
-$env:SOURCE_MONGO_API_URL = "your-connection-string"
-```
-![node version](./images/WindowsPS.png)
-
-
-## Task 5: Create Frontend UI
-
-1. Ask Cline to create a public folder.
-```
-Add prompt: Ask Cline to create a `public` folder for the frontend assets.
+$env:SOURCE_MONGO_API_URL="your-connection-string"
 ```
 
-[Optional] Or run the command below in the project directory, to create a `public` folder:
+*add image: Environment variable confirmation*
 
-```bash
-<copy>
-mkdir public
-</copy>
-```
-2. Prompt Cline to create a front end index.html file in the public folder.
+---
 
-```
-add prompt: Ask Cline to generate a simple `public/index.html` frontend that calls the To-Do app CRUD endpoints.
-```
+## Task 5: Generating the Frontend
 
-<!-- *add image: Cline response or generated file preview for the frontend `index.html` in the `public` folder.* -->
+*add image: Creating public folder*
 
-![public](./images/publicindex.png)
-
-[Optional] Here is an example of Cline generated output that is consistent with the lab. 
-
-```html
-<copy>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AJD-Powered Mongo To-Do List</title>
-  <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 2em auto; }
-    h1 { color: #4267b2; }
-    ul { padding-left: 0; }
-    li { list-style: none; margin: 1em 0; display: flex; align-items: center; }
-    .completed { text-decoration: line-through; color: #888; }
-    button { margin-left: 1em; }
-  </style>
-</head>
-<body>
-  <h1>To-Do List</h1>
-  <input id="todo-input" type="text" placeholder="Add a new to-do" />
-  <button onclick="addTodo()">Add</button>
-  <ul id="todo-list"></ul>
-
-  <script>
-    async function fetchTodos() {
-      const res = await fetch('/api/todos');
-      const todos = await res.json();
-      const list = document.getElementById('todo-list');
-      list.innerHTML = '';
-      todos.forEach(todo => {
-        const li = document.createElement('li');
-        li.className = todo.completed ? 'completed' : '';
-        li.textContent = todo.text;
-
-        if (!todo.completed) {
-          const completeBtn = document.createElement('button');
-          completeBtn.textContent = 'Complete';
-          completeBtn.onclick = () => completeTodo(todo._id);
-          li.appendChild(completeBtn);
-        }
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.onclick = () => deleteTodo(todo._id);
-        li.appendChild(deleteBtn);
-
-        list.appendChild(li);
-      });
-    }
-
-    async function addTodo() {
-      const input = document.getElementById('todo-input');
-      const text = input.value.trim();
-      if (!text) return;
-      await fetch('/api/todos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      });
-      input.value = '';
-      fetchTodos();
-    }
-
-    async function completeTodo(id) {
-      await fetch('/api/todos/' + id, { method: 'PUT' });
-      fetchTodos();
-    }
-
-    async function deleteTodo(id) {
-      await fetch('/api/todos/' + id, { method: 'DELETE' });
-      fetchTodos();
-    }
-
-    // Fetch todos when page loads
-    window.onload = fetchTodos;
-  </script>
-</body>
-</html>
-</copy>
-```
-
-## Task 6: Run and Test the Application
-
-1. Ask Cline to run your application. 
+Ask the agent:
 
 ```
-add prompt: Ask Cline for the command to start the app locally and how to confirm it is running.
+Create a public folder for frontend assets.
 ```
-*add image: Cline response showing the command to run the app, ideally `node server.js`, and the expected local URL.*
 
-![Run Application](./images/RunApp.png)
+Then request UI generation:
 
-[Optional] Go to the application directory by entering cd.. to the NodeJS directory and Start the server:
+```
+Generate a simple public/index.html frontend that calls the To-Do CRUD endpoints.
+```
 
-``` cd ..  ```
+*add image: Generated UI preview*
 
-![node version](./images/cd.png)
+Your UI should allow:
 
-```bash
-<copy>
+- Adding todos  
+- Completing todos  
+- Deleting todos  
+
+---
+
+## Task 6: Running the Application
+
+*add image: Run command prompt*
+
+Ask the agent:
+
+```
+Provide the command to run this application locally and how to verify it is running.
+```
+
+Expected response:
+
+```
 node server.js
-</copy>
 ```
 
-2. Open `http://localhost:3000` in your browser add new to-do items and click Add Button.
+*add image: Server running*
 
-![To-Do List](./images/todocrud.png)
+Open:
 
-![To-Do List](./images/todo-list.png)
+```
+http://localhost:3000
+```
 
-3. Add, complete, and delete todos to verify CRUD operations with AJD.
+*add image: Application running*
 
-4. (Optional) Verify backend connectivity:
+Add and manage todos to validate CRUD functionality.
+
+Optional verification:
 
 ```bash
-<copy>
 curl http://localhost:3000/api/status
-</copy>
 ```
 
-Expected: `{ "status": "ok" }`
+Expected result:
 
-**Congratulations!** You've deployed a full-stack MongoDB-compatible app on AJD. You are now ready for Lab 4 to prepare source data and analyze for migration.
+```
+{ "status": "ok" }
+```
+
+---
+
+## Task 7: Comparing Results
+
+*add image: Sample UI above fold*  
+*add image: Sample UI CRUD interaction*
+
+Your generated application will be unique.
+
+Compare:
+
+- layout  
+- endpoint behavior  
+- CRUD workflow  
+- responsiveness  
+
+You may continue iterating with the agent to enhance styling or functionality.
+
+---
+
+## Task 8: Troubleshooting
+
+*add image: Merge conflict example*
+
+Common issues include:
+
+- merge conflict markers in generated files  
+- missing dependencies  
+- incorrect environment variables  
+- agent prematurely claiming completion  
+
+Provide console errors or logs to guide the agent.
+
+*add image: Agent re-prompting*
+
+---
+
+## Wrap-up
+
+You have successfully vibe coded a full-stack MongoDB-compatible application powered by Oracle Autonomous JSON Database.
+
+This demonstrates how developers can maintain familiar MongoDB tooling and workflows while leveraging AJD scalability and performance.
+
+You may now proceed to the next lab.
 
 ---
 
 ## Acknowledgements
 
-**Authors**
-* **Luke Farley**, Senior Cloud Engineer, ONA Data Platform S&E
+**Author**  
+Luke Farley, Senior Cloud Engineer  
 
-**Last Updated By/Date:**
-* **Luke Farley**, Senior Cloud Engineer, ONA Data Platform S&E, November 2025
+**Last Updated**  
+November 2025
