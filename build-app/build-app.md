@@ -69,13 +69,9 @@ Please acknowledge and confirm readiness for Sprint 1.
 
 **Planning Screenshot**
 
-Sprint 0 Planning Screenshot
-*This screenshot shows the AI summarizing the development approach and confirming understanding of the Mongo developer persona and AJD backend.*
+![Sprint 0 Planning Screenshot](./images/Task0-Plan.png)
 
-**Result Screenshot**
-
-Sprint 0 Result Screenshot
-*This screenshot confirms the AI has acknowledged the sprint structure and is ready to proceed.*
+*This screenshot shows the AI summarizing the development approach and confirming understanding of the Mongo developer persona and AJD backend. AI has acknowledged the sprint structure and is ready to proceed.*
 
 ---
 
@@ -107,6 +103,48 @@ This should prepare us for Sprint 2
 
 Sprint 1 Planning Screenshot
 *This screenshot illustrates the AI planning project initialization, dependency installation, and database connection setup.*
+
+**Planning Phase**
+Great — Sprint 1 scope is clear, and this is a solid foundation sprint.
+
+## Sprint 1 Implementation Plan
+
+I will implement the following in order:
+
+1. __Initialize project scaffolding__
+
+   - Create `package.json` (`npm init -y`)
+   - Install dependencies: `express`, `mongodb`
+
+2. __Create `server.js` baseline__
+
+   - Boot an Express app
+   - Add `express.json()` middleware
+   - Configure server to listen on port `3000`
+
+3. __Add MongoDB API connection setup__
+
+   - Read `MONGO_API_URL` from `process.env`
+   - Implement `async connectDB()` using `MongoClient`
+   - Inside `connectDB()`, connect and run `admin().ping()`
+   - Add startup failure handling if URI is missing or connection fails
+
+4. __Expose database globally for route usage__
+
+   - Create a module-level/global `db` variable in `server.js`
+   - Set `db` after successful connect (using a default DB name for now, with room to parameterize in Sprint 2)
+   - Ensure app startup only proceeds once DB connection is confirmed
+
+5. __Sprint 1 validation readiness__
+
+   - Confirm app starts on port `3000`
+   - Confirm DB ping log success/failure behavior is visible
+   - Leave code ready for CRUD routes in Sprint 2
+
+If this plan looks good, please __toggle to__
+
+__Act Mode (⌘⇧A)__ and I’ll implement Sprint 1 end-to-end now.
+
 
 **Result Screenshot**
 
