@@ -176,6 +176,23 @@ This lab assumes you have:
 mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
 ```
 
+10. Finally, set this connection string as the `MONGO_API_URL` environment variable so your application can securely access it in the next lab.
+
+**For Mac/Linux:**
+```bash
+export MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
+```
+
+**For Windows (Command Prompt):**
+```cmd
+set MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
+```
+
+**For Windows (PowerShell):**
+```powershell
+$env:MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
+```
+
 You are now ready for Lab 3 to build the To-Do app.
 
 ---

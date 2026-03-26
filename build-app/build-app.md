@@ -84,7 +84,7 @@ Please acknowledge and confirm readiness for Sprint 1.
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-![Sprint 0 Planning Screenshot](./images/Task0-Plan.png)
+![Sprint 0 Planning Screenshot](./images/Task1-Plan.png)
 
 *This screenshot shows the AI summarizing the development approach and confirming understanding of the Mongo developer persona and AJD backend. AI has acknowledged the sprint structure and is ready to proceed.*
 
@@ -97,12 +97,14 @@ Please acknowledge and confirm readiness for Sprint 1.
 
 ### 1. Planning: Crafting the prompt
 
-*How to construct this prompt:* Explicitly define the goal of the sprint. Break down the requirements into actionable, step-by-step instructions. Tell the AI exactly which dependencies to install, to initialize a local git repository with an appropriate `.gitignore`, what file to create, and how to handle the database connection using environment variables.
+*How to construct this prompt:* Explicitly define the goal of the sprint. Break down the requirements into actionable, step-by-step instructions. Tell the AI exactly which dependencies to install, to initialize a local git repository with an appropriate `.gitignore` at the root, what file to create, and how to handle the database connection using environment variables.
 
 ```text
 Hey again, let's kick off Sprint 1! 
 
-Could you initialize a new Node.js project for me and install the express and mongodb packages? Also, please initialize a local git repository and create a standard `.gitignore` file that ignores the node_modules directory and any .env files.
+Could you create a new subfolder called `todo-app` and initialize a new Node.js project inside it for me? Please install the express and mongodb packages within that folder. 
+
+Also, please initialize a local git repository at the root of the workspace (outside the `todo-app` folder) and create a standard `.gitignore` file at the root that ignores the `todo-app/node_modules` directory and any .env files.
 
 After that, create a server.js file and set up an Express server listening on port 3000. Be sure to add express.json middleware.
 
@@ -113,7 +115,8 @@ Finally, expose the database as a global db variable so we can easily use it in 
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-![Sprint 1 Planning Screenshot](./images/Task1-Plan.png)
+![Sprint 1 Planning Screenshot](./images/Task2-Plan.png)
+
 *This screenshot illustrates the AI planning project initialization, dependency installation, and database connection setup.*
 
 **Planning Phase**
