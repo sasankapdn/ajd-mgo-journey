@@ -176,22 +176,15 @@ This lab assumes you have:
 mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
 ```
 
-10. Finally, set this connection string as the `MONGO_API_URL` environment variable so your application can securely access it in the next lab.
+10. Finally, create a `.env` file at the **root of your workspace** and store your connection string as `MONGO_API_URL` so your application can securely access it in the next lab.
 
-**For Mac/Linux:**
-```bash
-export MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
+Use the following format in your root `.env` file:
+
+```env
+MONGO_API_URL=mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true
 ```
 
-**For Windows (Command Prompt):**
-```cmd
-set MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
-```
-
-**For Windows (PowerShell):**
-```powershell
-$env:MONGO_API_URL="mongodb://mongo_user:<your password>@<your ai database url>:27017/mongo_user?authMechanism=PLAIN&authSource=$external&ssl=true&retryWrites=false&loadBalanced=true"
-```
+**Note:** Keep `.env` out of source control. In Lab 3, your Node.js app will read this value as `process.env.MONGO_API_URL`.
 
 You are now ready for Lab 3 to build the To-Do app.
 

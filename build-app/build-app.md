@@ -102,13 +102,17 @@ Please acknowledge and confirm readiness for Sprint 1.
 ```text
 Hey again, let's kick off Sprint 1! 
 
-Could you create a new subfolder called `todo-app` and initialize a new Node.js project inside it for me? Please install the express and mongodb packages within that folder. 
+Use `ajd-folder` as the workspace root for this sprint.
+
+Before starting, please check that a root `.env` file exists in the workspace and verify that `MONGO_API_URL` is populated there.
+
+Could you create a new subfolder called `todo-app` and initialize a new Node.js project inside it for me? Please install the express, mongodb, and dotenv packages within that folder. 
 
 Also, please initialize a local git repository at the root of the workspace (outside the `todo-app` folder) and create a standard `.gitignore` file at the root that ignores the `todo-app/node_modules` directory and any .env files.
 
 After that, create a server.js file and set up an Express server listening on port 3000. Be sure to add express.json middleware.
 
-I also need you to set up the MongoDB connection using the official MongoClient. It should read the connection string from an environment variable called MONGO_API_URL. Create an async connectDB function that connects and pings the admin database, and make sure you call this during the server startup. 
+I also need you to set up the MongoDB connection using the official MongoClient. It should read the connection string from an environment variable called MONGO_API_URL (sourced from the root `.env` file). Please explicitly load environment variables in server.js (for example with `require('dotenv').config({ path: '../.env' })` when running from `todo-app`). Create an async connectDB function that connects and pings the admin database, and make sure you call this during the server startup. 
 
 Finally, expose the database as a global db variable so we can easily use it in our routes later. This will set us up perfectly for Sprint 2!
 ```
@@ -119,33 +123,41 @@ Finally, expose the database as a global db variable so we can easily use it in 
 
 *This screenshot illustrates the AI planning project initialization, dependency installation, and database connection setup.*
 
-**Planning Phase**
-Great — Sprint 1 scope is clear, and this is a solid foundation sprint.
+Cline will provide a plan that looks like this:
 
-#### Sprint 1 Implementation Plan
+> **Planning Phase**
+> 
+> Perfect—Sprint 1 scope is clear, and I have everything needed.
+> 
+> ### Proposed Sprint 1 implementation plan
+> 1. Create `todo-app/` in the workspace root.
+> 2. Initialize Node project inside it (`npm init -y`).
+> 3. Install dependencies in `todo-app`: `express` and `mongodb`.
+>    - plus `dotenv` so `.env` is loaded at runtime
+> 4. Initialize a local git repo at workspace root (`git init`) if not already initialized.
+> 5. Create/update root `.gitignore` to include:
+>    - `todo-app/node_modules`
+>    - `.env`
+>    - `**/.env`
+> 6. Create `todo-app/server.js` with:
+>    - Express app setup
+>    - `express.json()` middleware
+>    - `MongoClient` from official `mongodb` package
+>    - explicit `.env` loading (e.g., `require('dotenv').config({ path: '../.env' })`)
+>    - `MONGO_API_URL` read from env
+>    - `connectDB()` async function that connects and pings `admin`
+>    - global `db` exposure for future routes (e.g., `global.db = ...`)
+>    - startup flow that calls `connectDB()` before `app.listen(3000)`
+> 7. Quick validation:
+>    - verify dependencies installed
+>    - verify `server.js` syntax/load path is valid
+> 
+> If this plan looks good, please **toggle to Act mode** and I’ll implement it immediately.
 
-I will implement the following in order:
-
-1. __Initialize project scaffolding__
-   - Create `package.json` (`npm init -y`)
-   - Install dependencies: `express`, `mongodb`
-2. __Create `server.js` baseline__
-   - Boot an Express app
-   - Add `express.json()` middleware
-   - Configure server to listen on port `3000`
-3. __Add MongoDB API connection setup__
-   - Read `MONGO_API_URL` from `process.env`
-   - Implement `async connectDB()` using `MongoClient`
-   - Inside `connectDB()`, connect and run `admin().ping()`
-   - Add startup failure handling if URI is missing or connection fails
-4. __Expose database globally for route usage__
-   - Create a module-level/global `db` variable in `server.js`
-   - Set `db` after successful connect (using a default DB name for now, with room to parameterize in Sprint 2)
-   - Ensure app startup only proceeds once DB connection is confirmed
-5. __Sprint 1 validation readiness__
-   - Confirm app starts on port `3000`
-   - Confirm DB ping log success/failure behavior is visible
-   - Leave code ready for CRUD routes in Sprint 2
+Before acting on the plan, review it to ensure:
+- It uses the standard `mongodb` driver (not an Oracle-specific driver).
+- The `MONGO_API_URL` value is sourced from the root `.env` file, and server startup explicitly loads that `.env` file before `MongoClient` is created.
+- It correctly targets the `todo-app` subfolder while keeping the git repo and `.gitignore` at the workspace root.
 
 ### 3. Acting on the plan: Allowing the AI to write the code
 
@@ -155,6 +167,8 @@ If this plan looks good, please toggle to **Act Mode (⌘⇧A)** and allow the A
 
 Sprint 1 Result Screenshot
 *This screenshot shows the generated project files and a successful AJD connection message in the terminal.* Validate that the database ping was successful.
+
+If you see an error like `TypeError: Cannot read properties of undefined (reading 'startsWith')`, `MONGO_API_URL` was not loaded. Fix by loading `.env` explicitly before reading `process.env.MONGO_API_URL`.
 
 ---
 
@@ -270,6 +284,7 @@ If you would like to proceed to the next lab without running the AI prompts, you
 ```javascript
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+require('dotenv').config({ path: '../.env' });
 
 const app = express();
 app.use(express.json());
