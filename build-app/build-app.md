@@ -102,8 +102,6 @@ Please acknowledge and confirm readiness for Sprint 1.
 ```text
 Hey again, let's kick off Sprint 1! 
 
-Use `ajd-folder` as the workspace root for this sprint.
-
 Before starting, please check that a root `.env` file exists in the workspace and verify that `MONGO_API_URL` is populated there.
 
 Could you create a new subfolder called `todo-app` and initialize a new Node.js project inside it for me? Please install the express, mongodb, and dotenv packages within that folder. 
