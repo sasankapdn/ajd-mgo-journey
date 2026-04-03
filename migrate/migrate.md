@@ -1,39 +1,46 @@
-# Lab 5: Build Migration CLI and Migrate
+# Lab 4: Mongo Vibe Assist Migration Lab
 
 ## Introduction
 
-In this lab, you'll build a simple CLI tool to migrate data from your **source AJD** to a **target AJD** (or a separate target user) to simulate a real migration. You'll run the migration and handle any basic transformations.
+In this lab, you will apply vibe coding techniques to build `MongoVibeAssist_Migrator`, a professional, Node.js-based CLI tool designed to perform a full automation and demonstration of migrating a MongoDB database to an Oracle Autonomous JSON Database (AJD). 
 
-> **Estimated Time:** 30 minutes
+Rather than modifying your application code, you will use this tool to discover the source database schema, migrate all data efficiently in batches, replicate the indexes to AJD, and validate the migration with a seamless demonstration that swaps connection strings to prove full compatibility.
 
-**Note:** AI-generated output is non-deterministic. The instructions below first provide prompts for you to run in Cline and review the results. If you are not happy with the generated output, use the manual `[Optional]` steps in each task to complete the lab with the tested workflow.
+Just like in Lab 3, you will guide the AI assistant through a sequence of development sprints. 
 
----
+We will follow this 4-step workflow:
+1. **Planning**: Crafting the prompt.
+2. **Reviewing the plan**: Checking the AI's proposed implementation.
+3. **Acting on the plan**: Allowing the AI to write the code.
+4. **Validating and adjusting**: Testing the output and making necessary corrections.
 
-### Objectives
-
-In this lab, you will:
-- Learn and experiment with using Cline to build the migration workflow
-- Use a source AJD and a separate target AJD to simulate a real migration
-- Build a CLI tool to transfer collections and data
-- Run the migration and monitor progress
-- Handle any data transformation or mapping needs
+> **Estimated Time:** 35 minutes
 
 ---
 
-### Prerequisites
+## Objectives
+
+In this lab you will:
+* Run structured AI-assisted development sprints for a Node.js application.
+* Build the `MongoVibeAssist_Migrator` tool using the official `mongodb` npm package.
+* Build discovery, data migration, and index replication logic.
+* Implement explanatory logging designed for live demonstrations.
+
+---
+
+## Prerequisites
 
 This lab assumes you have:
-- Completed Lab 4
-- Your source AJD URI from Lab 2
-- A target AJD URI (created in Task 1)
-- The To-Do app data in 'todos_source' collection
+* Completed Lab 3.
+* Node.js v24+ installed.
+* Source MongoDB URI and Target AJD URI defined in a root `.env` file (e.g. `SOURCE_MONGO_API_URL` and `TARGET_MONGO_API_URL`).
+* VS Code with your Agent configured.
 
 ---
 
 ## Task 1: Provision Target AJD Instance
 
-1. Ask Cline to summarize the target AJD provisioning steps you need to repeat from Lab 2 for the migration target environment.
+1. Ask the AI assistant to summarize the target AJD provisioning steps you need to repeat from Lab 2 for the migration target environment.
 
 ```bash
 add prompt: Ask Cline to summarize which Lab 2 steps must be repeated to provision a separate target AJD instance and MongoDB-enabled target user.
@@ -53,156 +60,225 @@ MONGO_USER_TARGET user after following instruction in Lab 2 Task 2.
 
    ![Migration CLI](./images/mongoAPI.png)
 
-4. Ask Cline to add the new target connection string to your `.env` file from Lab 3.
-
-```bash
-add prompt: Ask Cline to add `TARGET_MONGO_API_URL` and rename `MONGO_API_URL` to `SOURCE_MONGO_API_URL` in our root `.env` file from Lab 3.
-```
-
-*add image: Cline response showing the updated .env file.*
-
-[Optional] Update your `.env` file manually to look like this:
-
-   ```bash
-   <copy>
-   SOURCE_MONGO_API_URL='...'
-   TARGET_MONGO_API_URL='...'
-   </copy>
-   ```
-
-*add image: Terminal or VS Code showing both environment variables in the .env file.*
-
-**Note:** You can terminate both AJD instances after completing the LiveLab to avoid ongoing costs.
+4. Add the original `MONGO_API_URL` as `SOURCE_MONGO_API_URL` and the new connection string as `TARGET_MONGO_API_URL` to the `.env` file created in Lab 3.
 
 ---
 
-## Task 2: Build the Migration CLI
+## Task 2: Sprint 0 — Grounding the AI Session
 
-**Goal:** Provide context so the AI understands the migration scope and generates a fully functioning Node.js CLI tool.
+**Goal:** Provide context so the AI understands the architecture, persona, and the Product Definition Document for the migration tool.
 
 ### 1. Planning: Crafting the prompt
 
-*How to construct this prompt:* Explicitly define the goal of building a migration CLI. Break down the requirements clearly: creating the directory, installing dependencies, handling shell arguments with Commander, displaying a progress bar, clearing out the target collection to avoid unique constraint violations, and ensuring streaming cursors are used.
+*How to construct this prompt:* Start by giving the AI context on the persona, architecture, and end goals by passing the Development Plan concepts.
 
-Provide this prompt:
+Provide this grounding prompt to set the context of the new project:
 
 ```text
-Create a new directory named 'migration-cli' and initialize a Node.js project. Install 'dotenv', 'mongodb', 'commander', and 'cli-progress'. Then, create a file named 'migrate.js' that implements a migration CLI.
-The CLI must:
-Use 'commander' to accept --src, --tgt, --source-collection, and --target-collection arguments.
-Connect to both MongoDB URIs.
-To ensure it is safe to re-run, clear the target collection using 'deleteMany({})' before starting.
-Use 'cli-progress' to show a progress bar while migrating documents 1:1 from source to target.
-Use a cursor to handle streaming for efficiency.
-Include error handling for connection issues and ensure clients are closed in a 'finally' block.
-Ensure the code is compatible with Node.js v24
+Hi, we are starting a new lab. Use the `migration-cli` folder as the workspace.
+
+We are building a Node.js CLI application called `MongoVibeAssist_Migrator`. The backend connects to an Oracle Autonomous JSON Database via the Mongo API.
+
+Here is the Product Definition Document & Development Plan for context:
+
+**Product Definition:** 
+Migrate Data: Move JSON documents and indexes from a source MongoDB to a target Oracle AJD.
+Demonstrate: Allow the original MongoDB application to run unchanged against AJD by simply swapping its connection string. Demonstration-First Logging: Output must be verbose and explanatory, to be read by a live audience (e.g. "== STEP 1: CONNECTING TO SOURCE MONGODB ==", "-> Why: We must connect...").
+
+**Sprints & Tech Stack:**
+Use `mongodb`, `commander`, `cli-progress`, `dotenv`. 
+Sprint 1: Connectivity & Discovery (package.json, connect.js, discover.js parsing schemas and counts).
+Sprint 2: Core Data Migration (migrate.js batch-reading/insert_many for a single collection).
+Sprint 3: Full Migration & Indexing (looping all collections, replicating index schemas, robust failure handling).
+Sprint 4: Validation & Demo Prep (validate.js counts comparison table, outputting final connection string, complete README.md).
+
+Please acknowledge the tech stack, narrative goals, and confirm readiness for Sprint 1.
 ```
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-![Migration CLI Prompt](./images/ClinePrompt.png)
+*This screenshot shows the AI summarizing the technical stack, acknowledging the focus on demonstration-friendly logging, and preparing for Sprint 1.*
 
-*This screenshot illustrates the AI planning project initialization, dependency installation, and migration script setup.*
+![Sprint 0 Planning Screenshot](./images/lab4-task1-plan.png)
+
+### 3. Acting & Validating
+
+Verify the AI clearly understands the requirement to build this in Node.js using the official `mongodb` npm package.
+
+---
+
+## Task 3: Sprint 1 — Connectivity & Discovery
+
+**Goal:** Initialize the Node.js environment, connect to the databases, and discover the MongoDB collections and index definitions.
+
+### 1. Planning: Crafting the prompt
+
+*How to construct this prompt:* Ask the AI to build the project foundation by initializing the package and creating the connectivity logic.
+
+Provide this prompt to start development:
+
+```text
+Let's kick off Sprint 1! 
+
+Please run `npm init -y`, install `mongodb`, `dotenv`, and `commander`. Set up our CLI skeleton. 
+
+Build a `connect.js` module to securely load `SOURCE_MONGO_API_URL` and `TARGET_MONGO_API_URL` from our root `../.env` file. Then, create a `discover.js` module that connects to the source MongoDB, lists all collections, calculates their document counts, and fetches their index definitions. 
+
+Finally, write simple passing unit tests for the connectivity module.
+```
+
+### 2. Reviewing the plan: Checking the AI's proposed implementation
+
+![Sprint 1 Planning Screenshot](./images/lab4-task2-plan.png)
+
+The AI will propose creating the package.json, connection handler, and discovery module.
 
 Before acting on the plan, review it to ensure:
-- It initializes the `migration-cli` properly.
-- The `dotenv`, `mongodb`, `commander`, and `cli-progress` packages are included.
-- It leverages streaming rather than pulling all records into memory at once.
+- The script correctly utilizes the `.env` variables from outside the folder.
+- `mongodb` is specified as the connection driver.
 
 ### 3. Acting on the plan: Allowing the AI to write the code
 
-If this plan looks good, please toggle to **Act Mode** and allow the AI to implement the migration CLI. You may be prompted to approve terminal commands like `npm init` and `npm install`.
-
-![Migration CLI Run Command](./images/RunCommand.png)
+Toggle to **Act Mode** and execute the plan. You will be prompted to approve terminal commands creating the package.json and installing dependencies.
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-![Migration CLI Confirm](./images/Confirm.png)
+![Sprint 1 Result Screenshot](./images/lab4-task2-act.png)
 
-*This screenshot shows the generated project files and the successful creation of `migrate.js`.* Verify that the file exists and is populated with the CLI logic.
+Ensure the output is clean. You can manually run the `discover.js` script (or `node main.js` depending on the AI's scaffolding) to verify it successfully pings your MongoDB and lists the collections.
 
 ---
 
-## Task 3: Run the Migration
+## Task 4: Sprint 2 — Core Data Migration
 
-**Goal:** Run the migration script locally and perform validation of the data transfer.
-
-*Note: When running the migration CLI, users reusing the AJD instance from previous Livelabs should ensure the source collection name matches the collection they intend to migrate. If not, the CLI may show a “successful migration” but migrate zero documents. The target collection can be any name since AJD will create it automatically.*
+**Goal:** Handle the data transfer efficiently for a single collection before attempting the whole database.
 
 ### 1. Planning: Crafting the prompt
 
-*How to construct this prompt:* Ask the AI to figure out exactly how to invoke the CLI script it just wrote. Pass along the names of the source and target collections.
+*How to construct this prompt:* Challenge the AI to build the core batch data transfer script for just a single collection first, enforcing explanatory logging.
 
 ```text
-Generate the final `node migrate.js` command to migrate `todos_source` to `todos_target`. Ensure the command effectively passes the `SOURCE_MONGO_API_URL` and `TARGET_MONGO_API_URL` from our root `.env` to the `--src` and `--tgt` arguments.
+Great! Moving to Sprint 2.
+
+Implement `migrate.js`. Add CLI arguments via commander allowing me to specify a single collection to migrate as a test. 
+
+Implement efficient batch-reading from the MongoDB source, and batch-writing using `insertMany` into the Oracle AJD target. Be sure to add clear, verbose demo-style logging (e.g., "Wrote batch 1/10...", "-> Why: Batching ensures memory efficiency"). 
+
+Write a unit test for this step mocking the mongodb clients to test the batch read/write logic.
 ```
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-*add image: Cline response with the final migration command ready to run.*
+![Sprint 2 Planning Screenshot](./images/lab4-task3-plan.png)
 
-*This screenshot shows the AI outlining how to start the migration script and validating the expected shell invocation.*
+### 3. Acting on the plan: Allowing the AI to write the code
 
-### 3. Acting on the plan: Allowing the AI to run the code
-
-Accept the AI's provided command instructions or execute the CLI command directly in your terminal:
-
-```bash
-<copy>
-export $(grep -v '^#' ../.env | xargs) && node migrate.js --src "$SOURCE_MONGO_API_URL" --tgt "$TARGET_MONGO_API_URL" --source-collection todos_source --target-collection todos_target
-</copy>
-```
-
-**Note:** If using the same instance for simplicity, set both `--src` and `--tgt` to the same URI, but prefer separate instances for a clear demonstration.
+Review the newly created data structures, and click to approve writing `migrate.js`.
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-Monitor the progress bar and output. 
+![Sprint 2 Result Screenshot](./images/lab4-task3-act.png)
 
-![Migration CLI](./images/mongo-cli-migrate.png)
+---
 
-*This screenshot shows the migration command running successfully, with the progress bar completed indicating the total number of documents transferred.*
+## Task 5: Sprint 3 — Full Migration & Indexing
+
+**Goal:** Scale the script to migrate all collections autonomously and migrate their metadata (indexes).
+
+### 1. Planning: Crafting the prompt
+
+*How to construct this prompt:* Ask the AI to expand the script into a loop across all collections and implement schema index replication.
+
+```text
+We are on Sprint 3! 
+
+Modify `migrate.js` to loop through all collections returned by our `discover.js` plan. After data is migrated, implement the index replication module: read the index definitions from discovery and duplicate them into AJD using standard index creation commands.
+
+Refine all the console logging during this loop so it is heavily explanatory for a live audience. Make sure to add robust error handling in case a batch fails to insert, logging the issue gracefully.
+```
+
+### 2. Reviewing the plan: Checking the AI's proposed implementation
+
+![Sprint 3 Planning Screenshot](./images/lab4-task4-plan.png)
+
+Verify that the index replication uses the standard MongoDB index APIs which are supported natively by Oracle AJD.
+
+### 3. Acting on the plan: Allowing the AI to write the code
+
+Toggle to Act mode and let the AI finish the core looping functionality. 
+
+### 4. Validating and adjusting: Testing the output and making necessary corrections
+
+![Sprint 3 Result Screenshot](./images/lab4-task4-act.png)
+
+---
+
+## Task 6: Sprint 4 — Validation & Demo Prep
+
+**Goal:** Ensure data integrity by counting documents across systems, output the final connection strings, and finalize documentation.
+
+### 1. Planning: Crafting the prompt
+
+*How to construct this prompt:* Instruct the AI to finish the tool by building validation logic and configuring the final demo presentation script.
+
+```text
+Final stretch, Sprint 4!
+
+Implement the `validate.js` module. It should run `countDocuments` on both the source DB and the target DB, and then print a beautiful comparison summary table confirming 100% data transfer. 
+
+Add the Demo Configuration Helper step at the very end of the script to output: "SUCCESS! Switch your application to this Target Connection String: <TARGET_MONGO_API_URL>".
+
+Finally, write the `README.md` outlining the "Demo Show Script" format from my original plan (Act 1 through Act 5) so the presenter knows exactly how to demo this tool.
+```
+
+### 2. Reviewing the plan: Checking the AI's proposed implementation
+
+![Sprint 4 Planning Screenshot](./images/lab4-task5-plan.png)
+
+### 3. Acting on the plan: Allowing the AI to write the code
+
+Let the AI create the validation scripts and the final README.md.
+
+### 4. Validating and adjusting: Testing the output and making necessary corrections
+
+![Sprint 4 Result Screenshot](./images/lab4-task5-act.png)
+
+You can now fully execute your tool:
+
+```bash
+node main.js --run-all
+```
+
+Watch the demonstration-first logging output to the terminal, and view the validation summary table confirming all your data successfully reached Oracle AJD.
 
 ---
 
 ## Optional: Reference Implementation
 
-If you would like to proceed with the migration without running the AI prompts, you may manually create the project and copy and paste the following reference implementation.
+If you would like to proceed without running the AI prompts, you may manually create and run the base migration script from previous iterations. The `migrate.js` implementation (from prior labs) also satisfies core data transfer:
 
-1. In a new directory (e.g., `migration-cli`), initialize the project:
+1. In a new directory, initialize the project:
    ```bash
-   <copy>
    mkdir migration-cli
    cd migration-cli
    npm init -y
-   </copy>
-   ```
-
-2. Install dependencies:
-   ```bash
-   <copy>
    npm install dotenv mongodb commander cli-progress
-   </copy>
    ```
 
-3. Create `migrate.js` with the following code:
+2. Create `migrate.js` with the following fallback code to handle streaming migrations:
    ```javascript
-   <copy>
    require('dotenv').config({ path: '../.env' });
    const { MongoClient } = require('mongodb');
    const { Command } = require('commander');
    const cliProgress = require('cli-progress');
 
    const program = new Command();
-
    program
      .requiredOption('--src <uri>', 'Source MongoDB URI')
      .requiredOption('--tgt <uri>', 'Target AJD URI')
      .requiredOption('--source-collection <name>', 'Source collection name')
      .requiredOption('--target-collection <name>', 'Target collection name');
-
    program.parse(process.argv);
-
    const options = program.opts();
 
    async function migrateCollection() {
@@ -212,29 +288,24 @@ If you would like to proceed with the migration without running the AI prompts, 
      try {
        await srcClient.connect();
        await tgtClient.connect();
-
        const srcCol = srcClient.db().collection(options.sourceCollection);
        const tgtCol = tgtClient.db().collection(options.targetCollection);
 
-       // Clear target collection before migration to avoid unique constraint violations
        await tgtCol.deleteMany({});
-
        const count = await srcCol.countDocuments();
-       console.log(`Migrating ${count} documents from ${options.sourceCollection} to ${options.targetCollection}`);
+       console.log(`Migrating ${count} docs`);
 
        const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
        bar.start(count, 0);
 
        const cursor = srcCol.find();
        let migrated = 0;
-
        while (await cursor.hasNext()) {
          const doc = await cursor.next();
          await tgtCol.insertOne(doc);
          migrated++;
          bar.update(migrated);
        }
-
        bar.stop();
        console.log('Migration completed successfully.');
      } catch (error) {
@@ -244,29 +315,8 @@ If you would like to proceed with the migration without running the AI prompts, 
        await tgtClient.close();
      }
    }
-
    migrateCollection();
-   </copy>
    ```
-
----
-<!--
-## Task 4: Handle Transformations (Optional)
-
-If needed, modify the script in Task 1 (e.g., in the while loop, adjust `doc` before inserting). For this workshop, assume a simple 1:1 migration. Cline can assist with custom transformations.
-
----
-
-## Troubleshooting
-
-- **Node Version Issues:** Ensure you are using Node.js v24 or later in both the todo-app and migration-cli directories. If you encounter a SyntaxError on '??=', switch with `nvm use 24` and confirm with `node -v`. The mongodb package requires Node >=20.19.0.
-
-- **URI Encoding:** Ensure special characters are encoded.
-- **Unique Constraint Violations (ORA-00001):** If you encounter errors about unique constraints (e.g., duplicate _id), clear the target collection before migration by adding `await tgtCol.deleteMany({});` before the count and migration loop in migrate.js.
-- **Large Datasets:** The cursor handles streaming for efficiency.
-- **Errors:** Check connections; add logging if needed for debugging.
--->
-You are now ready for Lab 6 to validate and explore.
 
 ---
 
