@@ -53,42 +53,41 @@ MONGO_USER_TARGET user after following instruction in Lab 2 Task 2.
 
    ![Migration CLI](./images/mongoAPI.png)
 
-4. Ask Cline to help you confirm the export commands for both environment variables.
+4. Ask Cline to add the new target connection string to your `.env` file from Lab 3.
 
 ```bash
-add prompt: Ask Cline to provide the shell commands for exporting `SOURCE_MONGO_API_URL` and `TARGET_MONGO_API_URL` and explain how to verify they are set.
+add prompt: Ask Cline to add `TARGET_MONGO_API_URL` and rename `MONGO_API_URL` to `SOURCE_MONGO_API_URL` in our root `.env` file from Lab 3.
 ```
 
-*add image: Cline response showing the export commands for the source and target MongoDB API URLs.*
+*add image: Cline response showing the updated .env file.*
 
-[Optional] Export both environment variables and verify they are set:
+[Optional] Update your `.env` file manually to look like this:
 
    ```bash
    <copy>
-   export SOURCE_MONGO_API_URL='...'
-   export TARGET_MONGO_API_URL='...'
-
-   echo $SOURCE_MONGO_API_URL
-   echo $TARGET_MONGO_API_URL
+   SOURCE_MONGO_API_URL='...'
+   TARGET_MONGO_API_URL='...'
    </copy>
    ```
 
-*add image: Terminal showing both environment variables echoed successfully after export.*
+*add image: Terminal or VS Code showing both environment variables in the .env file.*
 
 **Note:** You can terminate both AJD instances after completing the LiveLab to avoid ongoing costs.
 
 ---
 
 ## Task 2: Build the Migration CLI
-1. From VS Code, open the Cline extension again.
 
- ![Migration CLI](./images/Cline.png)
+**Goal:** Provide context so the AI understands the migration scope and generates a fully functioning Node.js CLI tool.
 
-2. Copy below text for the Cline Prompt.
+### 1. Planning: Crafting the prompt
 
-```bash
-<copy>
-Create a new directory named 'migration-cli' and initialize a Node.js project. Install 'mongodb', 'commander', and 'cli-progress'. Then, create a file named 'migrate.js' that implements a migration CLI.
+*How to construct this prompt:* Explicitly define the goal of building a migration CLI. Break down the requirements clearly: creating the directory, installing dependencies, handling shell arguments with Commander, displaying a progress bar, clearing out the target collection to avoid unique constraint violations, and ensuring streaming cursors are used.
+
+Provide this prompt:
+
+```text
+Create a new directory named 'migration-cli' and initialize a Node.js project. Install 'dotenv', 'mongodb', 'commander', and 'cli-progress'. Then, create a file named 'migrate.js' that implements a migration CLI.
 The CLI must:
 Use 'commander' to accept --src, --tgt, --source-collection, and --target-collection arguments.
 Connect to both MongoDB URIs.
@@ -97,30 +96,80 @@ Use 'cli-progress' to show a progress bar while migrating documents 1:1 from sou
 Use a cursor to handle streaming for efficiency.
 Include error handling for connection issues and ensure clients are closed in a 'finally' block.
 Ensure the code is compatible with Node.js v24
+```
+
+### 2. Reviewing the plan: Checking the AI's proposed implementation
+
+![Migration CLI Prompt](./images/ClinePrompt.png)
+
+*This screenshot illustrates the AI planning project initialization, dependency installation, and migration script setup.*
+
+Before acting on the plan, review it to ensure:
+- It initializes the `migration-cli` properly.
+- The `dotenv`, `mongodb`, `commander`, and `cli-progress` packages are included.
+- It leverages streaming rather than pulling all records into memory at once.
+
+### 3. Acting on the plan: Allowing the AI to write the code
+
+If this plan looks good, please toggle to **Act Mode** and allow the AI to implement the migration CLI. You may be prompted to approve terminal commands like `npm init` and `npm install`.
+
+![Migration CLI Run Command](./images/RunCommand.png)
+
+### 4. Validating and adjusting: Testing the output and making necessary corrections
+
+![Migration CLI Confirm](./images/Confirm.png)
+
+*This screenshot shows the generated project files and the successful creation of `migrate.js`.* Verify that the file exists and is populated with the CLI logic.
+
+---
+
+## Task 3: Run the Migration
+
+**Goal:** Run the migration script locally and perform validation of the data transfer.
+
+*Note: When running the migration CLI, users reusing the AJD instance from previous Livelabs should ensure the source collection name matches the collection they intend to migrate. If not, the CLI may show a “successful migration” but migrate zero documents. The target collection can be any name since AJD will create it automatically.*
+
+### 1. Planning: Crafting the prompt
+
+*How to construct this prompt:* Ask the AI to figure out exactly how to invoke the CLI script it just wrote. Pass along the names of the source and target collections.
+
+```text
+Generate the final `node migrate.js` command to migrate `todos_source` to `todos_target`. Ensure the command effectively passes the `SOURCE_MONGO_API_URL` and `TARGET_MONGO_API_URL` from our root `.env` to the `--src` and `--tgt` arguments.
+```
+
+### 2. Reviewing the plan: Checking the AI's proposed implementation
+
+*add image: Cline response with the final migration command ready to run.*
+
+*This screenshot shows the AI outlining how to start the migration script and validating the expected shell invocation.*
+
+### 3. Acting on the plan: Allowing the AI to run the code
+
+Accept the AI's provided command instructions or execute the CLI command directly in your terminal:
+
+```bash
+<copy>
+export $(grep -v '^#' ../.env | xargs) && node migrate.js --src "$SOURCE_MONGO_API_URL" --tgt "$TARGET_MONGO_API_URL" --source-collection todos_source --target-collection todos_target
 </copy>
 ```
 
-*add image: Cline panel with the migration prompt pasted in and ready to execute.*
+**Note:** If using the same instance for simplicity, set both `--src` and `--tgt` to the same URI, but prefer separate instances for a clear demonstration.
 
-3. Paste it in Cline Prompt and Click Execute Button highlighted below.
+### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-![Migration CLI](./images/ClinePrompt.png)
+Monitor the progress bar and output. 
 
-4. You can see Pending Item and Cline wants to execute this command. Click Run Command to execute it.
+![Migration CLI](./images/mongo-cli-migrate.png)
 
-![Migration CLI](./images/RunCommand.png)
+*This screenshot shows the migration command running successfully, with the progress bar completed indicating the total number of documents transferred.*
 
-5. After succefully ran above command, Cline wants to create a new file. Click Save Button to create migrate.js file.
+---
 
-![Migration CLI](./images/SaveFile.png)
+## Optional: Reference Implementation
 
-6. You can confirm your Task has been completed and migrate.js has been created.
+If you would like to proceed with the migration without running the AI prompts, you may manually create the project and copy and paste the following reference implementation.
 
-![Migration CLI](./images/Confirm.png)
-
-[Optional] If you are not happy with the generated output from Cline, manually create the project and use the tested code below.
-
-<!-- 1. In a new directory (e.g., `migration-cli`), initialize the project:
+1. In a new directory (e.g., `migration-cli`), initialize the project:
    ```bash
    <copy>
    mkdir migration-cli
@@ -132,16 +181,14 @@ Ensure the code is compatible with Node.js v24
 2. Install dependencies:
    ```bash
    <copy>
-   npm install mongodb commander cli-progress
+   npm install dotenv mongodb commander cli-progress
    </copy>
    ```
-
-> **Cline prompt (optional):**
-> “Generate a Node.js CLI that migrates documents from a source MongoDB URI to a target MongoDB URI. Use commander for args and include a progress bar. Make it safe to re-run.”
 
 3. Create `migrate.js` with the following code:
    ```javascript
    <copy>
+   require('dotenv').config({ path: '../.env' });
    const { MongoClient } = require('mongodb');
    const { Command } = require('commander');
    const cliProgress = require('cli-progress');
@@ -183,8 +230,6 @@ Ensure the code is compatible with Node.js v24
 
        while (await cursor.hasNext()) {
          const doc = await cursor.next();
-         // Optional: Basic transformation (e.g., add a field)
-         // doc.migrated = true;
          await tgtCol.insertOne(doc);
          migrated++;
          bar.update(migrated);
@@ -203,40 +248,6 @@ Ensure the code is compatible with Node.js v24
    migrateCollection();
    </copy>
    ```
-
-   This script supports separate source and target URIs.
-
----
--->
-## Task 3: Run the Migration
-
-When running the migration CLI, users reusing the AJD instance from 
-*Create a MongoDB-Compatible App with Autonomous JSON Database* or *MongoDB Migration – Lift & Shift to Oracle AI Database* Livelabs should ensure the source collection name matches the collection they intend to migrate. If not, the CLI may show a “successful migration” but migrate zero documents. The target collection can be any name since AJD will create it automatically.
-
-1. Ask Cline to provide the final command for running the migration CLI with your source and target environment variables.
-
-```bash
-add prompt: Ask Cline to generate the final `node migrate.js` command using `SOURCE_MONGO_API_URL`, `TARGET_MONGO_API_URL`, `todos_source`, and `todos_target`.
-```
-
-*add image: Cline response with the final migration command ready to run.*
-
-2. Execute the CLI with separate source and target URIs:
-   ```bash
-   <copy>
-   node migrate.js --src "$SOURCE_MONGO_API_URL" --tgt "$TARGET_MONGO_API_URL" --source-collection todos_source --target-collection todos_target
-   </copy>
-   ```
-
-   **Note:** If using the same instance for simplicity, set both --src and --tgt to the same URI, but prefer separate instances for a clear demonstration.
-
-3. Monitor the progress bar and output.
-
-![Migration CLI](./images/mongo-cli-migrate.png)
-
-*add image: Terminal showing the migration command running successfully, ideally with the progress bar completed.*
-
-[Optional] Run the command above manually and confirm the progress bar completes without errors.
 
 ---
 <!--
