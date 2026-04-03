@@ -127,32 +127,37 @@ Cline will provide a plan that looks like this:
 
 > **Planning Phase**
 > 
-> Perfect—Sprint 1 scope is clear, and I have everything needed.
-> 
-> ### Proposed Sprint 1 implementation plan
-> 1. Create `todo-app/` in the workspace root.
-> 2. Initialize Node project inside it (`npm init -y`).
-> 3. Install dependencies in `todo-app`: `express` and `mongodb`.
->    - plus `dotenv` so `.env` is loaded at runtime
-> 4. Initialize a local git repo at workspace root (`git init`) if not already initialized.
-> 5. Create/update root `.gitignore` to include:
->    - `todo-app/node_modules`
->    - `.env`
->    - `**/.env`
-> 6. Create `todo-app/server.js` with:
->    - Express app setup
->    - `express.json()` middleware
->    - `MongoClient` from official `mongodb` package
->    - explicit `.env` loading (e.g., `require('dotenv').config({ path: '../.env' })`)
->    - `MONGO_API_URL` read from env
->    - `connectDB()` async function that connects and pings `admin`
->    - global `db` exposure for future routes (e.g., `global.db = ...`)
->    - startup flow that calls `connectDB()` before `app.listen(3000)`
-> 7. Quick validation:
->    - verify dependencies installed
->    - verify `server.js` syntax/load path is valid
-> 
-> If this plan looks good, please **toggle to Act mode** and I’ll implement it immediately.
+Perfect—Sprint 1 requirements are now clear, and I’ve translated them into concrete acceptance criteria and an execution plan.
+
+## Sprint 1 Acceptance Criteria
+1. **Root env validation**
+   - Confirm a root `.env` exists.
+   - Confirm `MONGO_API_URL` is present and non-empty.
+2. **Project scaffolding**
+   - Create `todo-app/`.
+   - Initialize Node.js project (`package.json`) inside `todo-app`.
+   - Install `express`, `mongodb`, `dotenv` in `todo-app`.
+3. **Root git setup**
+   - Initialize git repository at workspace root (outside `todo-app`).
+   - Create root `.gitignore` that ignores:
+     - `todo-app/node_modules`
+     - any `.env` files
+4. **Server implementation** (`todo-app/server.js`)
+   - Express app with `express.json()` middleware.
+   - Listen on port `3000`.
+   - Load env vars explicitly from root `.env` (e.g. `dotenv.config({ path: '../.env' })`).
+   - Implement `async connectDB()` with official `MongoClient` using `process.env.MONGO_API_URL`.
+   - Connect and `ping` admin DB during startup.
+   - Expose connected database as global `db` variable for future route usage.
+
+## Implementation Plan (when executing)
+1. Verify root `.env` and `MONGO_API_URL`.
+2. Create `todo-app`, initialize npm, install dependencies.
+3. Initialize root git repo and add root `.gitignore` with required ignore rules.
+4. Create `todo-app/server.js` with Express + dotenv + MongoClient connection logic.
+5. Run a quick startup check (`node server.js`) to validate boot and DB ping behavior.
+
+I’m ready to execute this immediately. Please **toggle to Act mode** and I’ll perform Sprint 1 changes now.
 
 Before acting on the plan, review it to ensure:
 - It uses the standard `mongodb` driver (not an Oracle-specific driver).
@@ -195,6 +200,35 @@ The UI should just have a heading, a text input field, an add button, and an uno
 Sprint 2 Planning Screenshot
 *This screenshot shows the AI outlining API route creation and frontend UI generation steps.*
 
+** Planning Phase **
+
+Sprint 2 is well scoped and ready.
+
+I reviewed the current `todo-app/server.js`, and the Sprint 1 foundation is in place: Express is running, `express.json()` is enabled, AJD/Mongo connection is initialized at startup, and `global.db` is available.
+
+Implementation plan for Sprint 2:
+1. Add `express.static` in `server.js` to serve a new `public` folder
+2. Add `GET /api/todos` to read all documents from the `todos` collection
+3. Add `POST /api/todos` to accept a `text` field and insert `{ text, completed: false }`
+4. Create `todo-app/public/index.html`
+5. Build a minimal UI with:
+   - heading
+   - text input
+   - add button
+   - unordered list
+6. Add vanilla JavaScript in the page to:
+   - fetch `/api/todos` on load
+   - render todos into the list
+   - submit new todos to the POST route
+   - refresh the rendered list after adding
+
+A couple of small implementation choices I’ll use unless you want otherwise:
+- `GET /api/todos` will likely sort newest first using `_id: -1`
+- `POST /api/todos` will validate that `text` is present and non-empty, returning `400` if invalid
+- The root `/` route can serve `index.html` automatically through `express.static`
+
+If that sounds good, please toggle to Act mode and I’ll implement Sprint 2.
+
 ### 3. Acting on the plan: Allowing the AI to write the code
 
 Review the generated file structure and approve the AI to write the code.
@@ -229,6 +263,30 @@ Back on the frontend, could you update the UI to include a "Complete" and "Delet
 Sprint 3 Planning Screenshot
 *This screenshot captures the AI describing enhancements to support update and delete functionality.*
 
+**Planning Phase**
+Sprint 3 is ready to implement.
+
+I reviewed both the backend and frontend. The current app already supports Create and Read, serves static files, and renders todos from the API, so we can cleanly extend it for the remaining CRUD operations.
+
+Planned Sprint 3 changes:
+1. Update the backend Mongo import to include `ObjectId`
+2. Add `PUT /api/todos/:id` to mark a todo as `{ completed: true }`
+3. Add `DELETE /api/todos/:id` to remove a todo by `_id`
+4. Handle invalid IDs and not-found documents cleanly with appropriate status codes
+5. Update the frontend renderer so each list item shows:
+   - todo text
+   - a `Complete` button
+   - a `Delete` button
+6. Wire the buttons to call the new PUT and DELETE endpoints
+7. Refresh the list after each action so the UI stays in sync
+
+Implementation details I’ll use unless you want a different behavior:
+- `PUT /api/todos/:id` will only set `completed: true` (as requested), not toggle back and forth
+- Completed items can be visually distinguished in the UI, for example with strikethrough text or muted styling
+- The frontend will continue using plain vanilla JavaScript in `index.html`
+
+If that looks good, please toggle to Act mode and I’ll implement Sprint 3.
+
 ### 3. Acting on the plan: Allowing the AI to write the code
 
 Approve the approach to complete the CRUD implementations.
@@ -251,13 +309,39 @@ Sprint 3 Result Screenshot
 ```text
 Awesome! For Sprint 4, we're ready to run and validate the app.
 
-Could you provide the exact command I need to run the server locally? Also, outline the steps I should take in my browser to verify that the app is healthy and all the CRUD actions are working properly. Thanks!
+Please run the server and then use Browser Use to test the application in the browser at `http://localhost:3000`.
+
+As you validate, perform the full CRUD flow: create a todo, confirm it appears, complete it, and delete it.
+
+Then share:
+1. The exact command used to run the server
+2. A short Browser Use test summary with pass/fail for each CRUD action
+3. Any issues found and the fixes applied (if needed)
 ```
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
 Sprint 4 Planning Screenshot
 *This screenshot shows the AI outlining how to start the server and validate endpoints.*
+
+**Planning Phase**
+Great — we can validate Sprint 4 with the available tooling once you switch to Act mode.
+
+Plan:
+1. Run the server locally from `todo-app`
+2. Use HTTP requests (`curl`) against `http://localhost:3000` to validate the app behavior
+3. Exercise the full CRUD flow:
+   - Create a todo
+   - Read/confirm it appears
+   - Mark it complete
+   - Delete it
+4. If any issue appears, I’ll inspect the code, apply a fix, and re-test
+5. I’ll then report back with:
+   - the exact command used to run the server
+   - a short pass/fail test summary for Create, Read, Update, and Delete
+   - any issues found and fixes applied
+
+Please toggle to Act mode and I’ll run the server and perform the validation.
 
 ### 3. Acting on the plan: Allowing the AI to write the code
 
@@ -271,7 +355,7 @@ Sprint 4 Result Screenshot
 Open:
 [http://localhost:3000](http://localhost:3000)
 
-Create, complete, and delete todos.
+Use Browser Use to create, complete, and delete todos, and confirm each action succeeds.
 
 ---
 
