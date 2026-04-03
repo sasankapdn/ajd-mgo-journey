@@ -2,10 +2,10 @@
 
 ## Introduction
 
-To-Do App UI Screenshot Above Fold
+![To-Do App UI Screenshot Above Fold](./images/todo-list.png)
 *This screenshot shows the final To-Do application layout that you will build by the end of the sprints. Use it as a visual success target.*
 
-To-Do App UI Screenshot CRUD Actions
+![To-Do App UI Screenshot CRUD Actions](./images/todocrud.png)
 *This screenshot highlights completing and deleting todos, demonstrating the full CRUD workflow that you will implement.*
 
 Modern developers are increasingly using AI agents to accelerate application development. Instead of writing every file manually, developers can now guide intelligent tooling to scaffold projects, generate working code, and iterate quickly. This emerging workflow is often referred to as **vibe coding** — a collaborative development approach where the developer focuses on intent, architecture, and validation while the AI assists with implementation.
@@ -170,7 +170,7 @@ If this plan looks good, please toggle to **Act Mode (⌘⇧A)** and allow the A
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-Sprint 1 Result Screenshot
+![Sprint 1 Result Screenshot](./images/Task2-Act.png)
 *This screenshot shows the generated project files and a successful AJD connection message in the terminal.* Validate that the database ping was successful.
 
 If you see an error like `TypeError: Cannot read properties of undefined (reading 'startsWith')`, `MONGO_API_URL` was not loaded. Fix by loading `.env` explicitly before reading `process.env.MONGO_API_URL`.
@@ -197,7 +197,7 @@ The UI should just have a heading, a text input field, an add button, and an uno
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-Sprint 2 Planning Screenshot
+![Sprint 2 Planning Screenshot](./images/Task3-Plan.png)
 *This screenshot shows the AI outlining API route creation and frontend UI generation steps.*
 
 ** Planning Phase **
@@ -235,7 +235,7 @@ Review the generated file structure and approve the AI to write the code.
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-Sprint 2 Result Screenshot
+![Sprint 2 Result Screenshot](./images/Task3-Act.png)
 *This screenshot displays the running UI where new todos can be added and listed.* Validate that you can add a new todo and see it appear.
 
 ---
@@ -260,7 +260,7 @@ Back on the frontend, could you update the UI to include a "Complete" and "Delet
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-Sprint 3 Planning Screenshot
+![Sprint 3 Planning Screenshot](./images/Task4-Plan.png)
 *This screenshot captures the AI describing enhancements to support update and delete functionality.*
 
 **Planning Phase**
@@ -293,7 +293,7 @@ Approve the approach to complete the CRUD implementations.
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-Sprint 3 Result Screenshot
+![Sprint 3 Result Screenshot](./images/Task4-Act.png)
 *This screenshot shows completed todos being visually updated and removed from the list.* Provide adjusting prompts if UI elements need fixing.
 
 ---
@@ -321,7 +321,7 @@ Then share:
 
 ### 2. Reviewing the plan: Checking the AI's proposed implementation
 
-Sprint 4 Planning Screenshot
+![Sprint 4 Planning Screenshot](./images/Task5-Plan.png)
 *This screenshot shows the AI outlining how to start the server and validate endpoints.*
 
 **Planning Phase**
@@ -349,7 +349,7 @@ Accept the AI's provided command instructions.
 
 ### 4. Validating and adjusting: Testing the output and making necessary corrections
 
-Sprint 4 Result Screenshot
+![Sprint 4 Result Screenshot](./images/Task5-Act.png)
 *This screenshot confirms the application is accessible in the browser and CRUD actions are functioning.*
 
 Open:
