@@ -307,7 +307,7 @@ Approve the approach to complete the CRUD implementations.
 ```text
 Awesome! For Sprint 4, we're ready to run and validate the app.
 
-Please run the server and then use Browser Use to test the application in the browser at `http://localhost:3000`.
+Please run the server and test the application in the browser at `http://localhost:3000`.
 
 As you validate, perform the full CRUD flow: create a todo, confirm it appears, complete it, and delete it.
 
